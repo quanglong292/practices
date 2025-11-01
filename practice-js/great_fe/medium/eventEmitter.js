@@ -6,37 +6,44 @@ class EventEmitter {
   on(eventName, fn) {
     if (!this.events[eventName]) {
       this.events[eventName] = [fn];
-      return;
+      return this;
     }
 
     const events = this.events[eventName];
 
     this.events[eventName] = [...events, fn];
+
+    return this;
   }
 
   emit(eventName, ...args) {
     const events = this.events[eventName];
 
-    console.log({ events: this.events[eventName] });
+    if (!events || !events.length) return false;
 
-    if (!events.length) throw "Not implemented!";
+    let isExist = false;
 
     for (const event of events) {
-    //   const event = events[eventKey];
-
-      if (typeof event === "function") event(...args);
+      if (typeof event === "function") {
+        event(...args);
+        isExist = true;
+      }
     }
+
+    return isExist;
   }
 
   off(eventName, fn) {
     const events = this.events[eventName];
     // this.events[eventName] = null;
 
-    if (events.length) {
+    if (events?.length) {
       this.events[eventName] = events.filter((e) => e !== fn);
     } else {
       this.events[eventName] = [];
     }
+
+    return this;
   }
 }
 
