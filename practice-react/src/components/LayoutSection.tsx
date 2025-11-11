@@ -5,7 +5,7 @@ type Props = {
 };
 
 const LayoutSection = ({ children }: Props) => {
-  return <div>{children}</div>;
+  return <div className="h-full w-full">{children}</div>;
 };
 
 export default LayoutSection;

@@ -41,6 +41,8 @@ export default function ViewReactFlow() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         fitView
+        noPanClassName="text-red-500"
+        node
       />
     </div>
   );

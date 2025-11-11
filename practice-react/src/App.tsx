@@ -1,13 +1,14 @@
 import "./App.css";
 import LayoutSection from "./components/LayoutSection";
+import ViewReactFlow from "./views/ViewReactFlow";
 
 function App() {
   return (
-    <div>
+    <>
       <LayoutSection>
-        <h1>Hello</h1>
+        <ViewReactFlow />
       </LayoutSection>
-    </div>
+    </>
   );
 }
 
