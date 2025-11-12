@@ -1,13 +1,16 @@
 import "./App.css";
 import LayoutSection from "./components/LayoutSection";
-import ViewReactFlow from "./views/ViewReactFlow";
+import ViewBasicReactFlow from "./views/ReactFlow/ViewBasicReactFlow";
+import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
 
 function App() {
   return (
     <>
       <LayoutSection>
-        <ViewReactFlow />
+        <ViewBasicReactFlow />
       </LayoutSection>
+
+      <ViewSetupReactFlow />
     </>
   );
 }
