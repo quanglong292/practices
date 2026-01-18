@@ -2,6 +2,7 @@ import "./App.css";
 import LayoutSection from "./components/LayoutSection";
 import DateFns from "./views/DateFns";
 import ViewAJAX from "./views/Form/ViewAJAX";
+import KanBan from "./views/KanBan/KanBan";
 import ViewBasicReactFlow from "./views/ReactFlow/ViewBasicReactFlow";
 import ViewEvents from "./views/ReactFlow/ViewEvents";
 import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
@@ -18,7 +19,8 @@ function App() {
       {/* <ViewEvents /> */}
       {/* <ViewViewPort /> */}
       {/* <ViewAJAX/> */}
-      <DateFns />
+      {/* <DateFns /> */}
+      <KanBan />
     </>
   );
 }
