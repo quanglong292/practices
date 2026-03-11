@@ -48,7 +48,7 @@ const getFiscalYearDuration = ({
 
     fiscalYears.push({ year, startDate, endDate, label });
 
-    console.log({ year, yearRange, fyEndYear, fyStartYear });
+    // console.log({ year, yearRange, fyEndYear, fyStartYear });
   }
 
   return fiscalYears;
@@ -105,10 +105,10 @@ const cases = [
 
 for (const { from, to, should } of cases) {
   const fiscalYears = getFiscalYearDuration({ from, to });
-  console.log(`From ${from.toDateString()} to ${to.toDateString()}:`, {
-    fiscalYears,
-    fromToString: `From ${from.toDateString()} to ${to.toDateString()}`,
-    should,
-    correct: fiscalYears.map((fy) => fy.label).toString() === should.toString(),
-  });
+  // console.log(`From ${from.toDateString()} to ${to.toDateString()}:`, {
+  //   fiscalYears,
+  //   fromToString: `From ${from.toDateString()} to ${to.toDateString()}`,
+  //   should,
+  //   correct: fiscalYears.map((fy) => fy.label).toString() === should.toString(),
+  // });
 }
