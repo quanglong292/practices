@@ -101,6 +101,12 @@ const AddIcon = () => (
     </svg>
 );
 
+const DeleteIcon = () => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="mp-icon mp-icon-xs">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+    </svg>
+);
+
 export default function MusicPlayer() {
     const {
         currentSong,
@@ -110,6 +116,7 @@ export default function MusicPlayer() {
         progress,
         setProgress,
         addSong,
+        deleteSong,
         next,
         previous,
         jumpTo,
@@ -406,6 +413,17 @@ export default function MusicPlayer() {
                                     <span className="mp-track-duration">
                                         {formatTime(song.duration)}
                                     </span>
+                                    <button
+                                        className="mp-btn mp-btn-delete"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteSong(i);
+                                        }}
+                                        aria-label={`Delete ${song.title}`}
+                                        title="Delete song"
+                                    >
+                                        <DeleteIcon />
+                                    </button>
                                 </button>
                             ))}
                         </div>

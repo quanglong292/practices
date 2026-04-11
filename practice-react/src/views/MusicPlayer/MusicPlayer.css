@@ -608,3 +608,24 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
+
+/* ---- Delete button on track ---- */
+.mp-btn-delete {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: all 0.15s ease;
+}
+
+.mp-track:hover .mp-btn-delete {
+  opacity: 1;
+}
+
+.mp-btn-delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
