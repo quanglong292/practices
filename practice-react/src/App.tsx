@@ -4,6 +4,7 @@ import DateFns from "./views/DateFns";
 import ViewAJAX from "./views/Form/ViewAJAX";
 import { Sortable } from "./views/KanBan/_components/Sortable";
 import KanBan from "./views/KanBan/KanBan";
+import MusicPlayer from "./views/MusicPlayer/MusicPlayer";
 import ViewBasicReactFlow from "./views/ReactFlow/ViewBasicReactFlow";
 import ViewEvents from "./views/ReactFlow/ViewEvents";
 import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
@@ -22,7 +23,8 @@ function App() {
       {/* <ViewAJAX/> */}
       {/* <DateFns /> */}
       {/* <KanBan /> */}
-      <Sortable />
+      {/* <Sortable /> */}
+      <MusicPlayer />
     </>
   );
 }
