@@ -9,6 +9,7 @@ import ViewBasicReactFlow from "./views/ReactFlow/ViewBasicReactFlow";
 import ViewEvents from "./views/ReactFlow/ViewEvents";
 import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
 import ViewViewPort from "./views/ReactFlow/ViewViewPort";
+import UndoRedoForm from "./views/UndoRedo/UndoRedoForm";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
       {/* <DateFns /> */}
       {/* <KanBan /> */}
       {/* <Sortable /> */}
-      <MusicPlayer />
+      {/* <MusicPlayer /> */}
+      <UndoRedoForm />
     </>
   );
 }
