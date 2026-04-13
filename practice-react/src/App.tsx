@@ -10,6 +10,7 @@ import ViewEvents from "./views/ReactFlow/ViewEvents";
 import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
 import ViewViewPort from "./views/ReactFlow/ViewViewPort";
 import UndoRedoForm from "./views/UndoRedo/UndoRedoForm";
+import FuzzySearch from "./views/FuzzySearch/FuzzySearch";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
       {/* <KanBan /> */}
       {/* <Sortable /> */}
       {/* <MusicPlayer /> */}
-      <UndoRedoForm />
+      {/* <UndoRedoForm /> */}
+      <FuzzySearch />
     </>
   );
 }
