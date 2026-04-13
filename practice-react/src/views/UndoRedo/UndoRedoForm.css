@@ -1,0 +1,258 @@
+/* ========================================
+   Undo/Redo Form – Clean Dark UI
+   ======================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+.ur-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background: #0a0a0f;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #e4e4ec;
+}
+
+.ur-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 8px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Header ── */
+.ur-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ur-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #e4e4ec, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ur-subtitle {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0.35rem 0 0;
+}
+
+/* ── Content grid ── */
+.ur-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 640px) {
+  .ur-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Form ── */
+.ur-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ur-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ur-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.ur-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #e4e4ec;
+  font-size: 0.9rem;
+  font-family: inherit;
+  padding: 0.6rem 0.85rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ur-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.ur-input:focus {
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.ur-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* ── Actions ── */
+.ur-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.ur-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #e4e4ec;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ur-btn:hover:not(:disabled) {
+  background: rgba(96, 165, 250, 0.12);
+  border-color: rgba(96, 165, 250, 0.3);
+  color: #93c5fd;
+}
+
+.ur-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.ur-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── History timeline ── */
+.ur-history-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.ur-history-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0 1rem;
+}
+
+.ur-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  max-height: 360px;
+  padding-right: 4px;
+}
+
+.ur-timeline::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ur-timeline::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* ── Node ── */
+.ur-node {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  position: relative;
+  padding-bottom: 0.25rem;
+}
+
+.ur-node-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  margin-top: 3px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.2s ease;
+}
+
+.ur-node-line {
+  position: absolute;
+  top: 15px;
+  left: 4px;
+  width: 2px;
+  height: calc(100%);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ur-node-active .ur-node-dot {
+  background: #60a5fa;
+  border-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+.ur-node-redo .ur-node-dot {
+  opacity: 0.4;
+}
+
+.ur-node-redo .ur-node-content {
+  opacity: 0.35;
+}
+
+.ur-node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 0.75rem;
+  min-width: 0;
+}
+
+.ur-node-index {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ur-node-active .ur-node-index {
+  color: #60a5fa;
+}
+
+.ur-node-data {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ur-empty {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  padding: 2rem 0;
+}
