@@ -12,11 +12,10 @@ function maxSubArray(nums) {
 
     // Cập nhật kỷ lục tổng lớn nhất toàn cục
     maxSum = Math.max(maxSum, currentSum);
-    debugger;
   }
 
   return maxSum;
 }
 
-const nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4];
+const nums = [-2, 1, -3, 4, -1, 2, -1, 2, -5, 4];
 console.log(maxSubArray(nums)); // Output: 6
