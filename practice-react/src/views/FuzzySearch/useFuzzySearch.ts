@@ -117,31 +117,31 @@ export function fuzzyMatch(
   _query: string,
   _item: string,
 ): { score: number; matchedIndices: number[] } {
-  const defaultValues = { score: 0, matchedIndices: [] };
-  // TO-DO: Implement DSA logic here
-  // Hints:
-  //   1. Normalize both strings to lowercase
-  //   2. Use two pointers: one for query, one for item
-  //   3. Track matched indices as you go
-  //   4. Score bonuses: consecutive match (+5), first char match (+10), camelCase boundary (+8)
-  //   5. Return { score: 0, matchedIndices: [] } if not all query chars matched
-
-  // if (_query.length !== _item.length) return defaultValues;
-
   let score = 0;
   let matchedIndices = [];
-  let coreLength = _item.length;
+  let qIdx = 0;
 
-  console.log({ _query, _item });
+  for (let i = 0; i < _item.length; i++) {
+    const query = _query[qIdx]?.toLowerCase();
+    const item = _item[i]?.toLowerCase();
+    const normalItem = _item[i];
 
-  for (let i = 0; i < _query.length; i++) {
-    const query = _query[i];
-    const item = _item[coreLength - 1 - i];
-
-    console.log({ query, item });
+    if (query == item) {
+      matchedIndices.push(i);
+      // Match first case
+      if (i === 0) score += 10;
+      // Continuous + 5
+      if (matchedIndices.length > 1) {
+        const lastMatched = matchedIndices[matchedIndices.length - 2];
+        if (i === lastMatched + 1) score += 5;
+      }
+      // Different case + 8
+      if (query !== normalItem) score += 8;
+      qIdx++;
+    }
   }
 
-  return { score: 0, matchedIndices: [] };
+  return { score, matchedIndices };
 }
 
 /**
