@@ -164,7 +164,31 @@ export function buildFrequencyMap(_matchedItems: string[]): FrequencyEntry[] {
   //   4. Increment count for each char (case-insensitive)
   //   5. Convert Map to array of FrequencyEntry
   //   6. Sort by count descending
-  return [];
+
+  const record = new Map();
+  const fullText = _matchedItems.join('').toLocaleLowerCase()
+  const numberCharCodeRange = [48, 57];
+  const charCharCodeRange = [97, 122];
+
+
+  const updateRecord = (value: string) => {
+    record.set(value, (record.get(value) ?? 0) + 1)
+  }
+
+  for (let i = 0; i < fullText.length; i++) {
+    const char = fullText[i];
+    const charCode = char.charCodeAt(0);
+
+    if (charCode >= numberCharCodeRange[0] && charCode <= numberCharCodeRange[1]) updateRecord(char)
+    if (charCode >= charCharCodeRange[0] && charCode <= charCharCodeRange[1]) updateRecord(char)
+  }
+
+  const results = Array.from(record.entries()).map(([char, count]) => ({ char, count })).sort((a, b) => b.count - a.count);
+
+  console.log({ fullText, values: record.values(), results });
+
+
+  return results;
 }
 
 /**
@@ -186,9 +210,30 @@ export function fuzzySearchWithFrequency(
   //   4. Sort remaining by score descending
   //   5. Call buildFrequencyMap on matched items
   //   6. Return { results, frequencyMap, totalScanned, totalMatched }
+
+  const frequencyList: string[] = [];
+  const results: SearchResult[] = [];
+
+  _dataset.forEach(item => {
+    const result = fuzzyMatch(_query, item)
+
+    if (result.score) {
+      frequencyList.push(item)
+      results.push({
+        item,
+        score: result.score,
+        matchedIndices: result.matchedIndices,
+      })
+    }
+  })
+
+  const matches = buildFrequencyMap(frequencyList);
+
+  console.log({ frequencyList, matches });
+
   return {
-    results: [],
-    frequencyMap: [],
+    results: results,
+    frequencyMap: matches,
     totalScanned: 0,
     totalMatched: 0,
   };

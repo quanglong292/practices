@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useFuzzySearch, SAMPLE_DATASET } from "./useFuzzySearch";
 import type { LogEntry, SearchResult, FrequencyEntry } from "./useFuzzySearch";
+import { useFuzzySearchV2 } from "./useFuzzySearchV2";
 
 // ─── Sub-components ──────────────────────────────────────────────────
 
@@ -147,10 +148,10 @@ export default function FuzzySearch() {
         {/* ── Header ── */}
         <header className="text-center space-y-1">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-indigo-400 via-violet-400 to-amber-400 bg-clip-text text-transparent">
-            Fuzzy Search Filter
+            {/* Fuzzy Search Filter */}
           </h1>
           <p className="text-sm text-slate-500">
-            Subsequence matching · Frequency counting · HashMap + Two-pointer
+            {/* Subsequence matching · Frequency counting · HashMap + Two-pointer */}
           </p>
         </header>
 
