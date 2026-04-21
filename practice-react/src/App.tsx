@@ -11,6 +11,7 @@ import ViewSetupReactFlow from "./views/ReactFlow/ViewSetupReactFlow";
 import ViewViewPort from "./views/ReactFlow/ViewViewPort";
 import UndoRedoForm from "./views/UndoRedo/UndoRedoForm";
 import FuzzySearch from "./views/FuzzySearch/FuzzySearch";
+import BlackenToolbar from "./views/BlackenToolbar/BlackenToolbar";
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
       {/* <Sortable /> */}
       {/* <MusicPlayer /> */}
       {/* <UndoRedoForm /> */}
-      <FuzzySearch />
+      {/* <FuzzySearch /> */}
+      <BlackenToolbar />
     </>
   );
 }
