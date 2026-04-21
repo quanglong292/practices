@@ -39,8 +39,8 @@ const FloatingToolbar = () => {
       handleSelection();
     };
 
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => document.removeEventListener("mouseup", handleMouseUp);
+    document.addEventListener("selectionchange", handleMouseUp);
+    return () => document.removeEventListener("selectionchange", handleMouseUp);
   }, []);
 
   return (
