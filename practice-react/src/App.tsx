@@ -12,6 +12,8 @@ import ViewViewPort from "./views/ReactFlow/ViewViewPort";
 import UndoRedoForm from "./views/UndoRedo/UndoRedoForm";
 import FuzzySearch from "./views/FuzzySearch/FuzzySearch";
 import BlackenToolbar from "./views/BlackenToolbar/BlackenToolbar";
+import NotiManagement from "./views/NotiManagement/NotiManagement";
+import Maze from "./views/Maze/Maze";
 
 function App() {
   return (
@@ -30,7 +32,9 @@ function App() {
       {/* <MusicPlayer /> */}
       {/* <UndoRedoForm /> */}
       {/* <FuzzySearch /> */}
-      <BlackenToolbar />
+      {/* <BlackenToolbar /> */}
+      {/* <NotiManagement /> */}
+      <Maze />
     </>
   );
 }
