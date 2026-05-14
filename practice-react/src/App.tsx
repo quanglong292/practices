@@ -14,6 +14,7 @@ import FuzzySearch from "./views/FuzzySearch/FuzzySearch";
 import BlackenToolbar from "./views/BlackenToolbar/BlackenToolbar";
 import NotiManagement from "./views/NotiManagement/NotiManagement";
 import Maze from "./views/Maze/Maze";
+import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
       {/* <FuzzySearch /> */}
       {/* <BlackenToolbar /> */}
       {/* <NotiManagement /> */}
-      <Maze />
+      {/* <Maze /> */}
+      <AdvancedAPI />
     </>
   );
 }

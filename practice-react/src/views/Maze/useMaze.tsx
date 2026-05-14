@@ -56,12 +56,12 @@ export function useMaze() {
 
   // ----- Logging -----
 
-  const addLog = useCallback((message: string, type: LogEntry["type"] = "info") => {
-    setLogs((prev) => [
-      ...prev,
-      { timestamp: Date.now(), message, type },
-    ]);
-  }, []);
+  const addLog = useCallback(
+    (message: string, type: LogEntry["type"] = "info") => {
+      setLogs((prev) => [...prev, { timestamp: Date.now(), message, type }]);
+    },
+    [],
+  );
 
   // ----- Grid Manipulation -----
 
@@ -80,18 +80,20 @@ export function useMaze() {
         } else if (paintMode === "start") {
           // Move start: clear old, set new
           if (cell.type === "end") return prev;
-          for (const r of newGrid) for (const c of r) if (c.type === "start") c.type = "empty";
+          for (const r of newGrid)
+            for (const c of r) if (c.type === "start") c.type = "empty";
           cell.type = "start";
         } else if (paintMode === "end") {
           if (cell.type === "start") return prev;
-          for (const r of newGrid) for (const c of r) if (c.type === "end") c.type = "empty";
+          for (const r of newGrid)
+            for (const c of r) if (c.type === "end") c.type = "empty";
           cell.type = "end";
         }
 
         return newGrid;
       });
     },
-    [isRunning, paintMode]
+    [isRunning, paintMode],
   );
 
   const handleMouseDown = useCallback(
@@ -99,7 +101,7 @@ export function useMaze() {
       isPaintingRef.current = true;
       toggleCell(row, col);
     },
-    [toggleCell]
+    [toggleCell],
   );
 
   const handleMouseEnter = useCallback(
@@ -108,7 +110,7 @@ export function useMaze() {
         toggleCell(row, col);
       }
     },
-    [toggleCell, paintMode]
+    [toggleCell, paintMode],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -125,12 +127,20 @@ export function useMaze() {
       const newGrid = createGrid(ROWS, COLS);
 
       // Preserve start/end positions
-      let startR = DEFAULT_START[0], startC = DEFAULT_START[1];
-      let endR = DEFAULT_END[0], endC = DEFAULT_END[1];
+      let startR = DEFAULT_START[0],
+        startC = DEFAULT_START[1];
+      let endR = DEFAULT_END[0],
+        endC = DEFAULT_END[1];
       for (const r of prev) {
         for (const c of r) {
-          if (c.type === "start") { startR = c.row; startC = c.col; }
-          if (c.type === "end") { endR = c.row; endC = c.col; }
+          if (c.type === "start") {
+            startR = c.row;
+            startC = c.col;
+          }
+          if (c.type === "end") {
+            endR = c.row;
+            endC = c.col;
+          }
         }
       }
 
@@ -192,7 +202,10 @@ export function useMaze() {
     const { visitedInOrder, pathFound } = bfs(cleanGrid, startCell, endCell);
     const elapsed = performance.now() - startTime;
 
-    addLog(`🔍 BFS explored ${visitedInOrder.length} cells in ${elapsed.toFixed(2)}ms`, "step");
+    addLog(
+      `🔍 BFS explored ${visitedInOrder.length} cells in ${elapsed.toFixed(2)}ms`,
+      "step",
+    );
 
     // ----- Animate visited cells -----
     const delay = SPEED_MAP[speed];
@@ -216,30 +229,45 @@ export function useMaze() {
       const path = reconstructPath(endCell);
 
       for (let i = 0; i < path.length; i++) {
-        const tid = window.setTimeout(() => {
-          const cell = path[i];
-          setGrid((prev) => {
-            const copy = prev.map((r) => r.map((c) => ({ ...c })));
-            // Mark as "path" by adding a flag we'll check in render
-            (copy[cell.row][cell.col] as Cell & { isPath?: boolean }).isPath = true;
-            return copy;
-          });
-        }, pathDelay + 40 * i);
+        const tid = window.setTimeout(
+          () => {
+            const cell = path[i];
+            setGrid((prev) => {
+              const copy = prev.map((r) => r.map((c) => ({ ...c })));
+              // Mark as "path" by adding a flag we'll check in render
+              (copy[cell.row][cell.col] as Cell & { isPath?: boolean }).isPath =
+                true;
+              return copy;
+            });
+          },
+          pathDelay + 40 * i,
+        );
         timeoutsRef.current.push(tid);
       }
 
-      const finishTid = window.setTimeout(() => {
-        setIsRunning(false);
-        setIsFinished(true);
-        setStats({ visited: visitedInOrder.length, pathLength: path.length, time: elapsed });
-        addLog(`✅ Path found! Length: ${path.length} cells`, "success");
-      }, pathDelay + 40 * path.length);
+      const finishTid = window.setTimeout(
+        () => {
+          setIsRunning(false);
+          setIsFinished(true);
+          setStats({
+            visited: visitedInOrder.length,
+            pathLength: path.length,
+            time: elapsed,
+          });
+          addLog(`✅ Path found! Length: ${path.length} cells`, "success");
+        },
+        pathDelay + 40 * path.length,
+      );
       timeoutsRef.current.push(finishTid);
     } else {
       const finishTid = window.setTimeout(() => {
         setIsRunning(false);
         setIsFinished(true);
-        setStats({ visited: visitedInOrder.length, pathLength: 0, time: elapsed });
+        setStats({
+          visited: visitedInOrder.length,
+          pathLength: 0,
+          time: elapsed,
+        });
         addLog("🚫 No path exists — end is unreachable!", "error");
       }, pathDelay);
       timeoutsRef.current.push(finishTid);
@@ -271,12 +299,12 @@ export function useMaze() {
       prev.map((row) =>
         row.map((cell) => ({
           ...cell,
-          type: cell.type === "wall" ? "empty" as CellType : cell.type,
+          type: cell.type === "wall" ? ("empty" as CellType) : cell.type,
           isVisited: false,
           previousNode: null,
           distance: Infinity,
-        }))
-      )
+        })),
+      ),
     );
     addLog("🧹 Walls cleared", "info");
   }, [isRunning, addLog]);
