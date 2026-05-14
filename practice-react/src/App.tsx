@@ -15,6 +15,7 @@ import BlackenToolbar from "./views/BlackenToolbar/BlackenToolbar";
 import NotiManagement from "./views/NotiManagement/NotiManagement";
 import Maze from "./views/Maze/Maze";
 import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
+import WebAPIs from "./views/WebAPIs/WebAPIs";
 
 function App() {
   return (
@@ -36,7 +37,8 @@ function App() {
       {/* <BlackenToolbar /> */}
       {/* <NotiManagement /> */}
       {/* <Maze /> */}
-      <AdvancedAPI />
+      {/* <AdvancedAPI /> */}
+      <WebAPIs />
     </>
   );
 }
