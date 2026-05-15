@@ -16,6 +16,7 @@ import NotiManagement from "./views/NotiManagement/NotiManagement";
 import Maze from "./views/Maze/Maze";
 import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 import WebAPIs from "./views/WebAPIs/WebAPIs";
+import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
 
 function App() {
   return (
@@ -38,7 +39,8 @@ function App() {
       {/* <NotiManagement /> */}
       {/* <Maze /> */}
       {/* <AdvancedAPI /> */}
-      <WebAPIs />
+      {/* <WebAPIs /> */}
+      <MonotonicDeque />
     </>
   );
 }

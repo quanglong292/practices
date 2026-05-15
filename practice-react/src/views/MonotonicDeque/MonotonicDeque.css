@@ -1,0 +1,260 @@
+/* ============================================================
+   Monotonic Deque Visualizer — Scoped Styles
+   ============================================================ */
+
+/* ----- Layout ----- */
+.md-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  color: #e2e8f0;
+  user-select: none;
+}
+
+/* ----- Header ----- */
+.md-header { text-align: center; margin-bottom: 20px; }
+.md-title {
+  font-size: 2rem; font-weight: 800; margin: 0 0 4px;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #34d399);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.md-title-icon { -webkit-text-fill-color: initial; margin-right: 8px; }
+.md-subtitle { margin: 0; font-size: 0.9rem; color: #94a3b8; }
+
+/* ----- Presets ----- */
+.md-presets {
+  display: flex; gap: 8px; justify-content: center;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+
+/* ----- Toolbar ----- */
+.md-toolbar {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  align-items: flex-end; justify-content: center;
+  margin-bottom: 16px; padding: 16px;
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+.md-toolbar-group { display: flex; flex-direction: column; gap: 6px; }
+.md-toolbar-label {
+  font-size: 0.7rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #64748b; font-weight: 600;
+}
+.md-btn-group { display: flex; gap: 6px; }
+.md-progress-text {
+  font-size: 0.85rem; font-weight: 700; color: #a78bfa;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ----- Buttons ----- */
+.md-btn {
+  padding: 7px 14px; font-size: 0.8rem; font-weight: 600;
+  border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 8px;
+  background: rgba(51, 65, 85, 0.6); color: #cbd5e1;
+  cursor: pointer; transition: all 0.15s ease;
+}
+.md-btn:hover:not(:disabled) { background: rgba(71, 85, 105, 0.8); transform: translateY(-1px); }
+.md-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.md-btn-active {
+  border-color: #60a5fa; background: rgba(96, 165, 250, 0.2);
+  color: #93c5fd; box-shadow: 0 0 12px rgba(96, 165, 250, 0.15);
+}
+.md-btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #fff; border-color: transparent;
+}
+.md-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+}
+.md-btn-warning { background: rgba(251, 146, 60, 0.25); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+.md-btn-danger { color: #fca5a5; border-color: rgba(252, 165, 165, 0.2); }
+.md-btn-danger:hover:not(:disabled) { background: rgba(239, 68, 68, 0.2); }
+.md-btn-preset { font-size: 0.75rem; padding: 5px 12px; }
+
+/* ----- Phase Bar ----- */
+.md-phase-bar {
+  display: flex; gap: 8px; justify-content: center;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.md-phase-chip {
+  padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+  border: 2px solid transparent; color: #64748b;
+  transition: all 0.3s ease;
+}
+.md-phase-active {
+  color: #e2e8f0;
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+}
+
+/* ----- Description ----- */
+.md-description {
+  padding: 12px 16px; margin-bottom: 16px;
+  background: rgba(30, 41, 59, 0.6);
+  border-left: 4px solid #64748b;
+  border-radius: 0 10px 10px 0;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.82rem; line-height: 1.6;
+  animation: fadeSlideIn 0.25s ease;
+}
+
+/* ----- Visualization Sections ----- */
+.md-vis-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.md-section {
+  padding: 16px; background: rgba(30, 41, 59, 0.5);
+  border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.1);
+}
+.md-section-title {
+  margin: 0 0 12px; font-size: 0.85rem; font-weight: 700;
+  color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.md-section-hint {
+  font-size: 0.7rem; font-weight: 400; color: #475569;
+  margin-left: 8px; text-transform: none; letter-spacing: 0;
+}
+
+/* ----- Array Cells ----- */
+.md-array-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.md-cell {
+  display: flex; flex-direction: column; align-items: center;
+  width: 64px; padding: 8px 4px; border-radius: 10px;
+  background: rgba(51, 65, 85, 0.4);
+  border: 2px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s ease;
+}
+.md-cell-index { font-size: 0.6rem; color: #475569; margin-bottom: 2px; }
+.md-cell-value { font-size: 1.2rem; font-weight: 800; color: #cbd5e1; }
+.md-cell-window {
+  border-color: rgba(96, 165, 250, 0.4);
+  background: rgba(96, 165, 250, 0.1);
+}
+.md-cell-current {
+  border-color: #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.2);
+  animation: currentPulse 0.4s ease;
+}
+.md-cell-current .md-cell-value { color: #facc15; }
+.md-cell-in-deque {
+  border-color: rgba(167, 139, 250, 0.5);
+  background: rgba(167, 139, 250, 0.12);
+}
+.md-cell-in-deque .md-cell-value { color: #a78bfa; }
+
+.md-window-label {
+  text-align: center; margin-top: 8px;
+  font-size: 0.75rem; color: #60a5fa; font-weight: 600;
+}
+.md-window-partial { color: #475569; font-weight: 400; font-style: italic; }
+
+/* ----- Deque ----- */
+.md-deque-container {
+  display: flex; align-items: center; gap: 12px; justify-content: center;
+}
+.md-deque-label {
+  font-size: 0.65rem; color: #475569; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+}
+.md-deque-body {
+  display: flex; gap: 6px; min-height: 64px; align-items: center;
+  padding: 8px 16px; border-radius: 12px; min-width: 80px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px dashed rgba(148, 163, 184, 0.2);
+  justify-content: center;
+}
+.md-deque-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 8px 12px; border-radius: 8px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(167, 139, 250, 0.2));
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  animation: dequeEnter 0.3s ease;
+}
+.md-deque-idx { font-size: 0.6rem; color: #818cf8; }
+.md-deque-val { font-size: 1.1rem; font-weight: 800; color: #c4b5fd; }
+.md-deque-empty { color: #475569; font-style: italic; font-size: 0.8rem; }
+
+/* Deque animations */
+.md-deque-push { animation: dequePush 0.4s ease; }
+.md-deque-pop { animation: dequePop 0.3s ease; }
+.md-deque-shift { animation: dequeShift 0.3s ease; }
+.md-deque-read {
+  border-color: #facc15;
+  box-shadow: 0 0 12px rgba(250, 204, 21, 0.3);
+  animation: dequeRead 0.5s ease;
+}
+
+/* ----- Result ----- */
+.md-result-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.md-result-item {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; font-size: 1.1rem; font-weight: 800;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(16, 185, 129, 0.15));
+  border: 1px solid rgba(34, 197, 94, 0.3); color: #6ee7b7;
+}
+.md-result-new { animation: resultPop 0.4s ease; box-shadow: 0 0 16px rgba(34, 197, 94, 0.3); }
+.md-result-empty { color: #475569; font-style: italic; font-size: 0.8rem; }
+
+/* ----- Log Console ----- */
+.md-log {
+  background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px);
+  border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.1); overflow: hidden;
+}
+.md-log-header {
+  padding: 10px 16px; font-size: 0.8rem; font-weight: 700;
+  color: #94a3b8; border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  background: rgba(30, 41, 59, 0.5);
+}
+.md-log-body {
+  padding: 12px 16px; max-height: 180px; overflow-y: auto;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.75rem; line-height: 1.8;
+}
+.md-log-empty { color: #475569; font-style: italic; }
+.md-log-entry { display: flex; gap: 10px; }
+.md-log-time { color: #475569; flex-shrink: 0; }
+
+/* Scrollbar */
+.md-log-body::-webkit-scrollbar { width: 6px; }
+.md-log-body::-webkit-scrollbar-track { background: transparent; }
+.md-log-body::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+/* ----- Animations ----- */
+@keyframes fadeSlideIn {
+  0% { opacity: 0; transform: translateX(-8px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes currentPulse {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+@keyframes dequeEnter {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes dequePush {
+  0% { opacity: 0; transform: translateX(20px) scale(0.7); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes dequePop {
+  0% { transform: translateX(10px); opacity: 0.5; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes dequeShift {
+  0% { transform: translateX(-10px); opacity: 0.5; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes dequeRead {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+@keyframes resultPop {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
