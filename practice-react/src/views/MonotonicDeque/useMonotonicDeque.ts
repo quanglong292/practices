@@ -286,6 +286,20 @@ export function useMonotonicDeque() {
     }
   }, [arr, k, steps.length, isPlaying, advanceStep, addLog]);
 
+  const stepBackward = useCallback(() => {
+    if (isPlaying || steps.length === 0) return;
+    const prevIndex = indexRef.current - 1;
+    if (prevIndex < 0) return;
+    indexRef.current = prevIndex;
+    setCurrentStepIndex(prevIndex);
+    setIsFinished(false);
+    const step = stepsRef.current[prevIndex];
+    addLog(
+      "info",
+      `⏪ [i=${step.i}] Rewound to: ${step.description}`
+    );
+  }, [isPlaying, steps.length, addLog]);
+
   const reset = useCallback(() => {
     pause();
     setSteps([]);
@@ -326,6 +340,7 @@ export function useMonotonicDeque() {
     play,
     pause,
     stepForward,
+    stepBackward,
     reset,
     updateArray,
     updateK,

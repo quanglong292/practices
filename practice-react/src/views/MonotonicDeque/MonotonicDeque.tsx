@@ -31,6 +31,28 @@ const PRESETS = [
   { label: "Large Window", arr: [2, 1, 5, 3, 6, 4, 8, 7], k: 4 },
 ];
 
+const ALGORITHM_CODE = [
+  "for (let i = 0; i < arr.length; i++) {",
+  "  // 1. Expire",
+  "  if (deque.length && deque[0] < i - k + 1) {",
+  "    deque.shift();",
+  "  }",
+  "",
+  "  // 2. Clean",
+  "  while (deque.length && arr[deque[deque.length - 1]] <= arr[i]) {",
+  "    deque.pop();",
+  "  }",
+  "",
+  "  // 3. Enter",
+  "  deque.push(i);",
+  "",
+  "  // 4. Harvest",
+  "  if (i >= k - 1) {",
+  "    result.push(arr[deque[0]]);",
+  "  }",
+  "}",
+];
+
 export default function MonotonicDeque() {
   const {
     arr,
@@ -46,6 +68,7 @@ export default function MonotonicDeque() {
     play,
     pause,
     stepForward,
+    stepBackward,
     reset,
     updateArray,
     updateK,
@@ -53,206 +76,259 @@ export default function MonotonicDeque() {
 
   const phase = currentStep?.phase ?? "idle";
 
+  const activeLines = currentStep
+    ? (() => {
+        switch (currentStep.phase) {
+          case "expire":
+            return currentStep.action === "shift" ? [2, 3] : [2];
+          case "clean":
+            return currentStep.action === "pop" ? [7, 8] : [7];
+          case "enter":
+            return [12];
+          case "harvest":
+            return currentStep.action === "read" ? [15, 16] : [15];
+          default:
+            return [];
+        }
+      })()
+    : [];
+
   return (
-    <div className="md-container">
-      <header className="md-header">
-        <h1 className="md-title">
-          <span className="md-title-icon">📊</span>
-          Monotonic Deque Visualizer
-        </h1>
-        <p className="md-subtitle">
-          Sliding Window Maximum — Step through the 4-phase lifecycle
-        </p>
-      </header>
-
-      {/* Presets */}
-      <div className="md-presets">
-        {PRESETS.map((p) => (
-          <button
-            key={p.label}
-            className={`md-btn md-btn-preset ${arr.join(",") === p.arr.join(",") && k === p.k ? "md-btn-active" : ""}`}
-            onClick={() => {
-              updateArray(p.arr);
-              updateK(p.k);
-            }}
-            disabled={isPlaying}
-          >
-            {p.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Toolbar */}
-      <div className="md-toolbar">
-        <div className="md-toolbar-group">
-          <span className="md-toolbar-label">Speed</span>
-          <div className="md-btn-group">
-            {(["slow", "normal", "fast"] as const).map((s) => (
-              <button
-                key={s}
-                className={`md-btn ${speed === s ? "md-btn-active" : ""}`}
-                onClick={() => setSpeed(s as Speed)}
-                disabled={isPlaying}
+    <div className="flex items-start">
+      {/* Code Visualizer */}
+      <div className="md-section mt-[152px]">
+        <h3 className="md-section-title">Algorithm Code</h3>
+        <div className="md-code-container">
+          {ALGORITHM_CODE.map((line, idx) => {
+            const isActive = activeLines.includes(idx);
+            return (
+              <div
+                key={idx}
+                className={`md-code-line ${isActive ? "md-code-line-active" : ""}`}
               >
-                {s}
-              </button>
-            ))}
-          </div>
+                <span className="md-code-number">{idx + 1}</span>
+                <pre
+                  style={{
+                    margin: 0,
+                    whiteSpace: "pre-wrap",
+                    fontFamily: "inherit",
+                  }}
+                >
+                  {line || " "}
+                </pre>
+              </div>
+            );
+          })}
         </div>
-        <div className="md-toolbar-group">
-          <span className="md-toolbar-label">Controls</span>
-          <div className="md-btn-group">
-            {!isPlaying ? (
-              <button
-                className="md-btn md-btn-primary"
-                onClick={play}
-                disabled={isFinished}
-              >
-                ▶ {totalSteps > 0 ? "Resume" : "Play"}
-              </button>
-            ) : (
-              <button className="md-btn md-btn-warning" onClick={pause}>
-                ⏸ Pause
-              </button>
-            )}
+      </div>
+      <div className="md-container">
+        <header className="md-header">
+          <h1 className="md-title">
+            <span className="md-title-icon">📊</span>
+            Monotonic Deque Visualizer
+          </h1>
+          <p className="md-subtitle">
+            Sliding Window Maximum — Step through the 4-phase lifecycle
+          </p>
+        </header>
+
+        {/* Presets */}
+        <div className="md-presets">
+          {PRESETS.map((p) => (
             <button
-              className="md-btn"
-              onClick={stepForward}
-              disabled={isPlaying || isFinished}
+              key={p.label}
+              className={`md-btn md-btn-preset ${arr.join(",") === p.arr.join(",") && k === p.k ? "md-btn-active" : ""}`}
+              onClick={() => {
+                updateArray(p.arr);
+                updateK(p.k);
+              }}
+              disabled={isPlaying}
             >
-              ⏭ Step
+              {p.label}
             </button>
-            <button className="md-btn md-btn-danger" onClick={reset}>
-              ↺ Reset
-            </button>
-          </div>
+          ))}
         </div>
-        <div className="md-toolbar-group">
-          <span className="md-toolbar-label">Progress</span>
-          <span className="md-progress-text">
-            {currentStepIndex + 1} / {totalSteps || "—"}
-          </span>
-        </div>
-      </div>
 
-      {/* Phase Indicator */}
-      <div className="md-phase-bar">
-        {(["expire", "clean", "enter", "harvest"] as Phase[]).map((p) => (
-          <div
-            key={p}
-            className={`md-phase-chip ${phase === p ? "md-phase-active" : ""}`}
-            style={{
-              borderColor: phase === p ? PHASE_COLORS[p] : "transparent",
-              background: phase === p ? `${PHASE_COLORS[p]}22` : undefined,
-            }}
-          >
-            {PHASE_LABELS[p]}
-          </div>
-        ))}
-      </div>
-
-      {/* Description */}
-      {currentStep && (
-        <div
-          className="md-description"
-          style={{ borderLeftColor: PHASE_COLORS[phase] }}
-        >
-          <strong style={{ color: PHASE_COLORS[phase] }}>
-            [i={currentStep.i}]
-          </strong>{" "}
-          {currentStep.description}
-        </div>
-      )}
-
-      {/* Main Visualization */}
-      <div className="md-vis-grid">
-        {/* Array Row */}
-        <div className="md-section">
-          <h3 className="md-section-title">Input Array</h3>
-          <div className="md-array-row">
-            {arr.map((val, idx) => {
-              let cls = "md-cell";
-              if (currentStep) {
-                if (
-                  idx >= currentStep.windowLeft &&
-                  idx <= currentStep.windowRight
-                )
-                  cls += " md-cell-window";
-                if (idx === currentStep.i) cls += " md-cell-current";
-                if (currentStep.deque.includes(idx)) cls += " md-cell-in-deque";
-              }
-              return (
-                <div key={idx} className={cls}>
-                  <span className="md-cell-index">i={idx}</span>
-                  <span className="md-cell-value">{val}</span>
-                </div>
-              );
-            })}
-          </div>
-          {/* Window bracket */}
-          {currentStep && (
-            <div className="md-window-label">
-              Window: [{currentStep.windowLeft}, {currentStep.windowRight}]
-              {currentStep.i < k - 1 && (
-                <span className="md-window-partial"> (filling...)</span>
-              )}
+        {/* Toolbar */}
+        <div className="md-toolbar">
+          <div className="md-toolbar-group">
+            <span className="md-toolbar-label">Speed</span>
+            <div className="md-btn-group">
+              {(["slow", "normal", "fast"] as const).map((s) => (
+                <button
+                  key={s}
+                  className={`md-btn ${speed === s ? "md-btn-active" : ""}`}
+                  onClick={() => setSpeed(s as Speed)}
+                  disabled={isPlaying}
+                >
+                  {s}
+                </button>
+              ))}
             </div>
-          )}
+          </div>
+          <div className="md-toolbar-group">
+            <span className="md-toolbar-label">Controls</span>
+            <div className="md-btn-group">
+              {!isPlaying ? (
+                <button
+                  className="md-btn md-btn-primary"
+                  onClick={play}
+                  disabled={isFinished}
+                >
+                  ▶ {totalSteps > 0 ? "Resume" : "Play"}
+                </button>
+              ) : (
+                <button className="md-btn md-btn-warning" onClick={pause}>
+                  ⏸ Pause
+                </button>
+              )}
+              <button
+                className="md-btn"
+                onClick={stepBackward}
+                disabled={isPlaying || currentStepIndex <= 0}
+              >
+                ⏮ Prev
+              </button>
+              <button
+                className="md-btn"
+                onClick={stepForward}
+                disabled={isPlaying || isFinished}
+              >
+                ⏭ Step
+              </button>
+              <button className="md-btn md-btn-danger" onClick={reset}>
+                ↺ Reset
+              </button>
+            </div>
+          </div>
+          <div className="md-toolbar-group">
+            <span className="md-toolbar-label">Progress</span>
+            <span className="md-progress-text">
+              {currentStepIndex + 1} / {totalSteps || "—"}
+            </span>
+          </div>
         </div>
 
-        {/* Deque */}
-        <div className="md-section">
-          <h3 className="md-section-title">
-            Monotonic Deque
-            <span className="md-section-hint">
-              (stores indices, values always decreasing ↘)
-            </span>
-          </h3>
-          <div className="md-deque-container">
-            <span className="md-deque-label">Front (max)</span>
-            <div className="md-deque-body">
-              {currentStep && currentStep.deque.length > 0 ? (
-                currentStep.deque.map((idx, pos) => (
+        {/* Phase Indicator */}
+        <div className="md-phase-bar">
+          {(["expire", "clean", "enter", "harvest"] as Phase[]).map((p) => (
+            <div
+              key={p}
+              className={`md-phase-chip ${phase === p ? "md-phase-active" : ""}`}
+              style={{
+                borderColor: phase === p ? PHASE_COLORS[p] : "transparent",
+                background: phase === p ? `${PHASE_COLORS[p]}22` : undefined,
+              }}
+            >
+              {PHASE_LABELS[p]}
+            </div>
+          ))}
+        </div>
+
+        {/* Description */}
+        {currentStep && (
+          <div
+            className="md-description"
+            style={{ borderLeftColor: PHASE_COLORS[phase] }}
+          >
+            <strong style={{ color: PHASE_COLORS[phase] }}>
+              [i={currentStep.i}]
+            </strong>{" "}
+            {currentStep.description}
+          </div>
+        )}
+
+        {/* Main Visualization */}
+        <div className="md-vis-grid">
+          {/* Array Row */}
+          <div className="md-section">
+            <h3 className="md-section-title">Input Array</h3>
+            <div className="md-array-row">
+              {arr.map((val, idx) => {
+                let cls = "md-cell";
+                if (currentStep) {
+                  if (
+                    idx >= currentStep.windowLeft &&
+                    idx <= currentStep.windowRight
+                  )
+                    cls += " md-cell-window";
+                  if (idx === currentStep.i) cls += " md-cell-current";
+                  if (currentStep.deque.includes(idx))
+                    cls += " md-cell-in-deque";
+                }
+                return (
+                  <div key={idx} className={cls}>
+                    <span className="md-cell-index">i={idx}</span>
+                    <span className="md-cell-value">{val}</span>
+                  </div>
+                );
+              })}
+            </div>
+            {/* Window bracket */}
+            {currentStep && (
+              <div className="md-window-label">
+                Window: [{currentStep.windowLeft}, {currentStep.windowRight}]
+                {currentStep.i < k - 1 && (
+                  <span className="md-window-partial"> (filling...)</span>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Deque */}
+          <div className="md-section">
+            <h3 className="md-section-title">
+              Monotonic Deque
+              <span className="md-section-hint">
+                (stores indices, values always decreasing ↘)
+              </span>
+            </h3>
+            <div className="md-deque-container">
+              <span className="md-deque-label">Front (max)</span>
+              <div className="md-deque-body">
+                {currentStep && currentStep.deque.length > 0 ? (
+                  currentStep.deque.map((idx, pos) => (
+                    <div
+                      key={`${idx}-${pos}`}
+                      className={`md-deque-item ${idx === currentStep.affectedDequeIndex ? `md-deque-${currentStep.action}` : ""}`}
+                    >
+                      <span className="md-deque-idx">idx {idx}</span>
+                      <span className="md-deque-val">{arr[idx]}</span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="md-deque-empty">empty</div>
+                )}
+              </div>
+              <span className="md-deque-label">Back (min)</span>
+            </div>
+          </div>
+
+          {/* Result */}
+          <div className="md-section">
+            <h3 className="md-section-title">Result</h3>
+            <div className="md-result-row">
+              {currentStep && currentStep.result.length > 0 ? (
+                currentStep.result.map((val, idx) => (
                   <div
-                    key={`${idx}-${pos}`}
-                    className={`md-deque-item ${idx === currentStep.affectedDequeIndex ? `md-deque-${currentStep.action}` : ""}`}
+                    key={idx}
+                    className={`md-result-item ${idx === currentStep.result.length - 1 && phase === "harvest" ? "md-result-new" : ""}`}
                   >
-                    <span className="md-deque-idx">idx {idx}</span>
-                    <span className="md-deque-val">{arr[idx]}</span>
+                    {val}
                   </div>
                 ))
               ) : (
-                <div className="md-deque-empty">empty</div>
+                <span className="md-result-empty">
+                  Waiting for first full window...
+                </span>
               )}
             </div>
-            <span className="md-deque-label">Back (min)</span>
           </div>
         </div>
 
-        {/* Result */}
-        <div className="md-section">
-          <h3 className="md-section-title">Result</h3>
-          <div className="md-result-row">
-            {currentStep && currentStep.result.length > 0 ? (
-              currentStep.result.map((val, idx) => (
-                <div
-                  key={idx}
-                  className={`md-result-item ${idx === currentStep.result.length - 1 && phase === "harvest" ? "md-result-new" : ""}`}
-                >
-                  {val}
-                </div>
-              ))
-            ) : (
-              <span className="md-result-empty">
-                Waiting for first full window...
-              </span>
-            )}
-          </div>
-        </div>
+        {/* Log Console */}
+        <LogConsole logs={logs} />
       </div>
-
-      {/* Log Console */}
-      <LogConsole logs={logs} />
     </div>
   );
 }
