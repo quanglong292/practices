@@ -17,6 +17,7 @@ import Maze from "./views/Maze/Maze";
 import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 import WebAPIs from "./views/WebAPIs/WebAPIs";
 import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
+import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
       {/* <Maze /> */}
       {/* <AdvancedAPI /> */}
       {/* <WebAPIs /> */}
-      <MonotonicDeque />
+      {/* <MonotonicDeque /> */}
+      <ThrottlePromise />
     </>
   );
 }
