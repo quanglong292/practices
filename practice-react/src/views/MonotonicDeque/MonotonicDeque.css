@@ -218,6 +218,38 @@
 .md-log-entry { display: flex; gap: 10px; }
 .md-log-time { color: #475569; flex-shrink: 0; }
 
+/* ----- Code Visualizer ----- */
+.md-code-container {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  overflow: hidden;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  padding: 12px 0;
+}
+.md-code-line {
+  padding: 2px 16px;
+  display: flex;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+.md-code-line-active {
+  background: rgba(96, 165, 250, 0.15);
+  color: #e2e8f0;
+  border-left: 3px solid #60a5fa;
+  padding-left: 13px; /* 16px - 3px border */
+}
+.md-code-number {
+  color: #475569;
+  min-width: 24px;
+  text-align: right;
+  margin-right: 16px;
+  user-select: none;
+}
+
 /* Scrollbar */
 .md-log-body::-webkit-scrollbar { width: 6px; }
 .md-log-body::-webkit-scrollbar-track { background: transparent; }
