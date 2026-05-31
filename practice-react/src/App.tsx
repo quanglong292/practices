@@ -17,6 +17,7 @@ import Maze from "./views/Maze/Maze";
 import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 import WebAPIs from "./views/WebAPIs/WebAPIs";
 import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
+import SlidingWindow from "./views/SlidingWindow/SlidingWindow";
 
 function App() {
   return (
@@ -40,7 +41,8 @@ function App() {
       {/* <Maze /> */}
       {/* <AdvancedAPI /> */}
       {/* <WebAPIs /> */}
-      <MonotonicDeque />
+      {/* <MonotonicDeque /> */}
+      <SlidingWindow />
     </>
   );
 }
