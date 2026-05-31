@@ -17,7 +17,7 @@ import Maze from "./views/Maze/Maze";
 import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 import WebAPIs from "./views/WebAPIs/WebAPIs";
 import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
-import SlidingWindow from "./views/SlidingWindow/SlidingWindow";
+import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
 
 function App() {
   return (
@@ -42,7 +42,7 @@ function App() {
       {/* <AdvancedAPI /> */}
       {/* <WebAPIs /> */}
       {/* <MonotonicDeque /> */}
-      <SlidingWindow />
+      <ThrottlePromise />
     </>
   );
 }
