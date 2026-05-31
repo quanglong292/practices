@@ -19,6 +19,7 @@ import WebAPIs from "./views/WebAPIs/WebAPIs";
 import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
 import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
 import HammingWeight from "./views/HammingWeight/HammingWeight";
+import TwoPointer from "./views/TwoPointer/TwoPointer";
 
 function App() {
   return (
@@ -44,7 +45,8 @@ function App() {
       {/* <WebAPIs /> */}
       {/* <MonotonicDeque /> */}
       {/* <ThrottlePromise /> */}
-      <HammingWeight />
+      {/* <HammingWeight /> */}
+      <TwoPointer />
     </>
   );
 }
