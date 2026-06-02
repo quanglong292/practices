@@ -18,6 +18,7 @@ import AdvancedAPI from "./views/AdvancedAPI/AdvancedAPI";
 import WebAPIs from "./views/WebAPIs/WebAPIs";
 import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
 import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
+import BinarySearch from "./views/BinarySearch/BinarySearch";
 
 function App() {
   return (
@@ -42,7 +43,8 @@ function App() {
       {/* <AdvancedAPI /> */}
       {/* <WebAPIs /> */}
       {/* <MonotonicDeque /> */}
-      <ThrottlePromise />
+      {/* <ThrottlePromise /> */}
+      <BinarySearch />
     </>
   );
 }

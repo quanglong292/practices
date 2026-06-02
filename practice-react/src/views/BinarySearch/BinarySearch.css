@@ -1,0 +1,655 @@
+/* ============================================================
+   Binary Search Visualizer — Premium Scoped Styles
+   ============================================================ */
+
+.bs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  font-family: 'Outfit', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  color: #f1f5f9;
+  user-select: none;
+  background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.9) 100%);
+  min-height: 100vh;
+}
+
+/* ----- Header ----- */
+.bs-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.bs-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #60a5fa, #38bdf8, #818cf8, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+.bs-title-icon {
+  margin-right: 12px;
+  -webkit-text-fill-color: initial;
+}
+
+.bs-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #94a3b8;
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ----- Presets ----- */
+.bs-presets {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.bs-btn-preset {
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bs-btn-preset:hover {
+  background: rgba(96, 165, 250, 0.1);
+  border-color: #60a5fa;
+  color: #60a5fa;
+  transform: translateY(-1px);
+}
+
+.bs-btn-preset.active {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(129, 140, 248, 0.2));
+  border-color: #60a5fa;
+  color: #38bdf8;
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.25);
+}
+
+/* ----- Toolbar ----- */
+.bs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.bs-toolbar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bs-toolbar-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.bs-input-text {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  color: #f8fafc;
+  min-width: 140px;
+  transition: all 0.2s ease;
+  font-family: 'Fira Code', monospace;
+}
+
+.bs-input-text:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
+}
+
+.bs-btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.bs-btn {
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  background: rgba(51, 65, 85, 0.5);
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bs-btn:hover:not(:disabled) {
+  background: rgba(71, 85, 105, 0.7);
+  border-color: rgba(148, 163, 184, 0.4);
+  transform: translateY(-2px);
+}
+
+.bs-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.bs-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.bs-btn-primary {
+  background: linear-gradient(135deg, #2563eb, #6366f1);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+}
+
+.bs-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.bs-btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.bs-btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.bs-progress-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #818cf8;
+  font-family: 'Fira Code', monospace;
+  align-self: center;
+  margin-left: 8px;
+}
+
+/* ----- Speed Controls ----- */
+.bs-speed-group {
+  display: flex;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.bs-btn-speed {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+}
+
+.bs-btn-speed:hover {
+  color: #f1f5f9;
+}
+
+.bs-btn-speed.active {
+  background: #38bdf8;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(56, 189, 248, 0.3);
+}
+
+/* ----- main visualizer split screen ----- */
+.bs-layout-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .bs-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bs-left-column, .bs-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ----- Styled Panels ----- */
+.bs-panel {
+  padding: 24px;
+  background: rgba(30, 41, 59, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bs-panel-title {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 8px;
+}
+
+/* ----- Step Description Banner ----- */
+.bs-description {
+  padding: 16px 20px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.05));
+  border-left: 5px solid #38bdf8;
+  border-radius: 4px 12px 12px 4px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.05);
+  animation: slideLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.bs-description-text {
+  font-weight: 500;
+}
+
+/* ----- Visual Array Arena ----- */
+.bs-arena-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 32px;
+  position: relative;
+  overflow-x: auto;
+}
+
+.bs-array-row {
+  display: flex;
+  gap: 12px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.bs-cell-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 68px;
+}
+
+.bs-cell {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 2px solid rgba(148, 163, 184, 0.15);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bs-cell-index {
+  font-size: 0.65rem;
+  color: #64748b;
+  font-weight: 700;
+  font-family: 'Fira Code', monospace;
+  margin-bottom: 2px;
+}
+
+.bs-cell-value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+/* Active Search Space */
+.bs-cell-active {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.05);
+}
+
+/* Dimmed Space (discarded range) */
+.bs-cell-dimmed {
+  opacity: 0.25;
+  filter: grayscale(80%);
+  background: rgba(15, 23, 42, 0.4);
+  border-color: rgba(148, 163, 184, 0.05);
+  transform: scale(0.95);
+}
+
+/* Midpoint Cell Glow */
+.bs-cell-mid {
+  border-color: #fbbf24;
+  background: rgba(251, 191, 36, 0.15);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.35);
+  transform: scale(1.08);
+  animation: midPulse 2s infinite ease-in-out;
+  z-index: 10;
+}
+
+.bs-cell-mid .bs-cell-value {
+  color: #fbbf24;
+}
+
+/* Target Found Cell */
+.bs-cell-found {
+  border-color: #34d399;
+  background: rgba(52, 211, 153, 0.2);
+  box-shadow: 0 0 25px rgba(52, 211, 153, 0.5);
+  transform: scale(1.12);
+  z-index: 11;
+}
+
+.bs-cell-found .bs-cell-value {
+  color: #34d399;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+}
+
+/* ----- Pointer System ----- */
+.bs-pointers-track {
+  height: 48px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.bs-pointer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: popIn 0.3s ease;
+}
+
+.bs-pointer-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  margin-bottom: 4px;
+}
+
+.bs-pointer-badge {
+  padding: 4px 10px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+}
+
+/* L - Low pointer color profile */
+.bs-pointer-low {
+  color: #60a5fa;
+}
+.bs-pointer-low .bs-pointer-arrow {
+  border-bottom: 8px solid #3b82f6;
+}
+.bs-pointer-low .bs-pointer-badge {
+  background: #3b82f6;
+}
+
+/* H - High pointer color profile */
+.bs-pointer-high {
+  color: #f87171;
+}
+.bs-pointer-high .bs-pointer-arrow {
+  border-bottom: 8px solid #ef4444;
+}
+.bs-pointer-high .bs-pointer-badge {
+  background: #ef4444;
+}
+
+/* M - Mid pointer color profile */
+.bs-pointer-mid {
+  color: #fbbf24;
+}
+.bs-pointer-mid .bs-pointer-arrow {
+  border-bottom: 8px solid #fbbf24;
+}
+.bs-pointer-mid .bs-pointer-badge {
+  background: #fbbf24;
+  color: #0f172a;
+}
+
+/* ----- State Inspect Panel ----- */
+.bs-state-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.bs-state-card {
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.bs-state-name {
+  font-size: 0.68rem;
+  color: #64748b;
+  text-transform: uppercase;
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.bs-state-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-family: 'Fira Code', monospace;
+}
+
+.bs-state-val-null {
+  color: #475569;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.bs-state-val-true {
+  color: #34d399;
+}
+
+.bs-state-val-false {
+  color: #f87171;
+}
+
+/* ----- Parallel Code Visualizer ----- */
+.bs-code-container {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  padding: 16px 0;
+}
+
+.bs-code-line {
+  padding: 3px 20px;
+  display: flex;
+  align-items: center;
+  color: #8892b0;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.bs-code-number {
+  color: #475569;
+  min-width: 24px;
+  text-align: right;
+  margin-right: 18px;
+  user-select: none;
+  font-size: 0.7rem;
+}
+
+.bs-code-text {
+  white-space: pre;
+}
+
+/* Active code line highlight */
+.bs-code-line-active {
+  background: rgba(56, 189, 248, 0.12);
+  color: #f8fafc;
+  border-left: 4px solid #38bdf8;
+  padding-left: 16px; /* 20px - 4px border */
+}
+
+.bs-code-line-active .bs-code-number {
+  color: #38bdf8;
+}
+
+.bs-code-inline-val {
+  color: #fbbf24;
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-left: 16px;
+  opacity: 0.95;
+  font-family: 'Outfit', sans-serif;
+  animation: fadeIn 0.2s ease;
+  background: rgba(251, 191, 36, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+/* ----- Steps Console Panel ----- */
+.bs-log-body {
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 14px 18px;
+  max-height: 190px;
+  overflow-y: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.74rem;
+  line-height: 1.8;
+}
+
+.bs-log-entry {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 6px;
+  animation: slideUp 0.2s ease;
+}
+
+.bs-log-time {
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.bs-log-text {
+  color: #cbd5e1;
+}
+
+.bs-log-type-success .bs-log-text {
+  color: #34d399;
+}
+
+.bs-log-type-warning .bs-log-text {
+  color: #fb923c;
+}
+
+.bs-log-type-info .bs-log-text {
+  color: #38bdf8;
+}
+
+.bs-log-empty {
+  color: #475569;
+  font-style: italic;
+}
+
+/* Custom Scrollbars */
+.bs-log-body::-webkit-scrollbar {
+  width: 6px;
+}
+.bs-log-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bs-log-body::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 3px;
+}
+.bs-log-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.3);
+}
+
+/* ----- Animations ----- */
+@keyframes slideLeft {
+  0% { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes midPulse {
+  0%, 100% { transform: scale(1.08); box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+  50% { transform: scale(1.04); box-shadow: 0 0 12px rgba(251, 191, 36, 0.15); }
+}
