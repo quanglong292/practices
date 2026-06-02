@@ -1,0 +1,657 @@
+/* ============================================================
+   Hamming Weight Visualizer — Scoped Styles
+   ============================================================ */
+
+/* ----- Layout ----- */
+.hw-app-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #e2e8f0;
+}
+
+.hw-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.hw-code-section {
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----- Header ----- */
+.hw-header {
+  text-align: left;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.hw-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 6px;
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #34d399);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hw-title-icon {
+  -webkit-text-fill-color: initial;
+  margin-right: 10px;
+}
+
+.hw-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ----- Configuration & Inputs ----- */
+.hw-config-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.hw-config-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.hw-input-form {
+  display: flex;
+  gap: 8px;
+}
+
+.hw-text-input {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.hw-text-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+}
+
+.hw-btn-submit {
+  background: #3b82f6;
+  color: white;
+  border-color: transparent;
+}
+
+.hw-btn-submit:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+/* ----- Presets ----- */
+.hw-presets {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.hw-presets-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.hw-btn-preset {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+}
+
+/* ----- Toolbar ----- */
+.hw-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.hw-toolbar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hw-toolbar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.hw-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.hw-progress-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #c084fc;
+  font-family: 'Fira Code', monospace;
+  padding: 6px 12px;
+  background: rgba(15, 23, 42, 0.4);
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+/* ----- Buttons ----- */
+.hw-btn {
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 8px;
+  background: rgba(51, 65, 85, 0.4);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.hw-btn:hover:not(:disabled) {
+  background: rgba(71, 85, 105, 0.6);
+  border-color: rgba(148, 163, 184, 0.3);
+  transform: translateY(-1px);
+}
+
+.hw-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.hw-btn-active {
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.15);
+  color: #93c5fd;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.15);
+}
+
+.hw-btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: white;
+  border-color: transparent;
+}
+
+.hw-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+}
+
+.hw-btn-warning {
+  background: rgba(249, 115, 22, 0.2);
+  color: #ff9800;
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.hw-btn-warning:hover:not(:disabled) {
+  background: rgba(249, 115, 22, 0.3);
+}
+
+.hw-btn-danger {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.hw-btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* ----- Explanation Alerts ----- */
+.hw-description-box {
+  padding: 14px 18px;
+  background: rgba(30, 41, 59, 0.6);
+  border-left: 4px solid #60a5fa;
+  border-radius: 0 12px 12px 0;
+  animation: slideInLeft 0.25s ease-out;
+}
+
+.hw-description-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hw-step-badge {
+  background: rgba(96, 165, 250, 0.2);
+  color: #60a5fa;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+}
+
+.hw-description-text {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+}
+
+/* ----- Visualization sections ----- */
+.hw-section {
+  padding: 20px;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.hw-section-title {
+  margin: 0 0 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ----- Bit Grid ----- */
+.hw-bit-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.hw-bit-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  border-radius: 10px;
+  background: rgba(51, 65, 85, 0.2);
+  border: 2px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.hw-bit-pos {
+  font-size: 0.6rem;
+  color: #475569;
+  font-family: 'Fira Code', monospace;
+  margin-bottom: 2px;
+}
+
+.hw-bit-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+/* Active State (bit is 1) */
+.hw-bit-active {
+  border-color: rgba(52, 211, 153, 0.3);
+  background: rgba(52, 211, 153, 0.06);
+}
+
+.hw-bit-active .hw-bit-val {
+  color: #34d399;
+}
+
+/* Checking State (current bit evaluated) */
+.hw-bit-checking {
+  border-color: #facc15;
+  background: rgba(250, 204, 21, 0.12);
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(250, 204, 21, 0.25);
+  z-index: 10;
+  animation: cellPulse 0.4s infinite alternate;
+}
+
+.hw-bit-checking .hw-bit-val {
+  color: #facc15;
+}
+
+/* Cleared State (Brian Kernighan cleared bit) */
+.hw-bit-cleared {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+  animation: cellClearedPop 0.5s ease-out;
+}
+
+.hw-bit-cleared .hw-bit-val {
+  color: rgba(239, 68, 68, 0.4);
+  text-decoration: line-through;
+}
+
+/* Legend */
+.hw-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-size: 0.75rem;
+  color: #64748b;
+  border-top: 1px dashed rgba(148, 163, 184, 0.1);
+  padding-top: 12px;
+}
+
+.hw-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hw-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.hw-legend-zero { background: rgba(51, 65, 85, 0.2); border: 1px solid rgba(148, 163, 184, 0.1); }
+.hw-legend-one { background: rgba(52, 211, 153, 0.06); border: 2px solid rgba(52, 211, 153, 0.3); }
+.hw-legend-check { background: rgba(250, 204, 21, 0.12); border: 2px solid #facc15; }
+.hw-legend-clear { background: rgba(239, 68, 68, 0.05); border: 2px solid rgba(239, 68, 68, 0.3); }
+
+/* ----- Brian Kernighan Math Panel ----- */
+.hw-math-panel {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(192, 132, 252, 0.15);
+  box-shadow: 0 0 15px rgba(192, 132, 252, 0.05);
+}
+
+.hw-math-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.76rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.hw-math-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.hw-math-label {
+  color: #a78bfa;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.hw-math-binary {
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.hw-math-divider {
+  height: 1px;
+  background: rgba(148, 163, 184, 0.2);
+  margin: 4px 0;
+}
+
+.hw-math-result {
+  font-weight: 700;
+}
+
+.hw-math-result .hw-math-label {
+  color: #34d399;
+}
+
+.hw-math-result .hw-math-binary {
+  color: #34d399;
+}
+
+/* ----- Status Cards ----- */
+.hw-status-row {
+  display: flex;
+  gap: 16px;
+}
+
+.hw-status-card {
+  flex: 1;
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hw-status-title {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.hw-status-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ----- Code Highlighting Scoped ----- */
+.hw-code-container {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  overflow: hidden;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  padding: 12px 0;
+}
+
+.hw-code-line {
+  padding: 2px 16px;
+  display: flex;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.hw-code-line-active {
+  background: rgba(96, 165, 250, 0.16);
+  color: #e2e8f0;
+  border-left: 4px solid #60a5fa;
+  padding-left: 12px; /* 16px - 4px border */
+}
+
+.hw-code-number {
+  color: #475569;
+  min-width: 20px;
+  text-align: right;
+  margin-right: 14px;
+  user-select: none;
+}
+
+.hw-explain-card {
+  padding: 16px;
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 12px;
+  border: 1px dashed rgba(148, 163, 184, 0.15);
+}
+
+.hw-explain-card h4 {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: #facc15;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hw-explain-card ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.hw-explain-card li {
+  margin-bottom: 8px;
+}
+
+.hw-explain-card li:last-child {
+  margin-bottom: 0;
+}
+
+/* ----- Log Console ----- */
+.hw-log {
+  background: rgba(15, 23, 42, 0.85);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  overflow: hidden;
+}
+
+.hw-log-header {
+  padding: 10px 16px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  background: rgba(30, 41, 59, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hw-log-body {
+  padding: 12px 16px;
+  max-height: 160px;
+  overflow-y: auto;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.74rem;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hw-log-empty {
+  color: #475569;
+  font-style: italic;
+}
+
+.hw-log-entry {
+  display: flex;
+  gap: 12px;
+}
+
+.hw-log-time {
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.hw-log-text {
+  word-break: break-all;
+}
+
+/* Scrollbars styling scoped */
+.hw-log-body::-webkit-scrollbar,
+.hw-math-layout::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.hw-log-body::-webkit-scrollbar-track,
+.hw-math-layout::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hw-log-body::-webkit-scrollbar-thumb,
+.hw-math-layout::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+/* ----- Responsive layout ----- */
+@media (max-width: 1024px) {
+  .hw-app-layout {
+    flex-direction: column-reverse;
+  }
+  .hw-code-section {
+    width: 100%;
+  }
+}
+
+/* ----- Keyframe Animations ----- */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes cellPulse {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.08); }
+}
+
+@keyframes cellClearedPop {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); border-color: #ef4444; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
