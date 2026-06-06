@@ -407,3 +407,24 @@ const isStringPalindrome = (s: string) => {
 
   return true;
 };
+
+function maxArea(height: number[]): number {
+  let value = 0;
+
+  if (!height.length) return value;
+  let leftI = 0;
+  let rightI = height.length - 1;
+
+  while (leftI < rightI) {
+    const width = rightI - leftI;
+    const area = width * Math.min(height[leftI], height[rightI]);
+
+    value = Math.max(area, value);
+
+    if (height[leftI] < height[rightI]) {
+      leftI++;
+    } else rightI--;
+  }
+
+  return value;
+}
