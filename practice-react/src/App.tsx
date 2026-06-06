@@ -20,6 +20,7 @@ import MonotonicDeque from "./views/MonotonicDeque/MonotonicDeque";
 import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
 import HammingWeight from "./views/HammingWeight/HammingWeight";
 import TwoPointer from "./views/TwoPointer/TwoPointer";
+import UseQueryDemo from "./views/UseQuery/UseQueryDemo";
 
 function App() {
   return (
@@ -46,7 +47,8 @@ function App() {
       {/* <MonotonicDeque /> */}
       {/* <ThrottlePromise /> */}
       {/* <HammingWeight /> */}
-      <TwoPointer />
+      {/* <TwoPointer /> */}
+      <UseQueryDemo />
     </>
   );
 }
