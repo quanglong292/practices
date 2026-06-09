@@ -21,16 +21,29 @@
 // Hint
 // You might find the Window.getComputedStyle() method helpful.
 
-function getElementsByStyle(element: HTMLElement, property: string, value: string) {
-    let returnValues: string[] = [];
+// test("doesn't include itself", () => {
+//       const containerEl = createElementFromHtmlString(
+//         `<div id="root" style="color: rgb(255, 255, 255)">
+//           <span class="match" style="color: rgb(255, 255, 255)">
+//             <!-- Here's a comment -->
+//             Span
+//             <span class="match" style="color: rgb(255, 255, 255)">Span</span>
+//           </span>
+//           <p>Paragraph</p>
+//           <div>
+//             <span class="match" style="color: rgb(255, 255, 255)">Span</span>
+//           </div>
+//         </div>`,
+//       );
 
-    const getter = (el: HTMLElement, prop: string, v: string) => {
+function getElementsByStyle(element: Element, property: string, value: string) {
+    let returnValues: Element[] = [];
+
+    const getter = (el: Element, prop: string, v: string) => {
         const rootStyles = window.getComputedStyle(el)
         const value = rootStyles.getPropertyValue(prop)
 
-        if (value === v) return el.tagName;
-
-        return null;
+        return value === v;
     }
 
     const find = (element: HTMLCollection) => {
@@ -38,16 +51,16 @@ function getElementsByStyle(element: HTMLElement, property: string, value: strin
 
         for (let i = 0; i < nodes.length; i++) {
             const node = nodes[i];
-            const getterValue = getter(node, property, value)
+            const found = getter(node, property, value)
 
-            if (getterValue) returnValues.push(getterValue)
+            if (found) returnValues.push(node)
 
             if (node.children) find(node.children)
         }
 
     }
 
-    find([element])
+    find(element.children)
 
     return returnValues;
 }
