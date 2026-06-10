@@ -21,6 +21,7 @@ import ThrottlePromise from "./views/ThrottlePromise/ThrottlePromise";
 import HammingWeight from "./views/HammingWeight/HammingWeight";
 import TwoPointer from "./views/TwoPointer/TwoPointer";
 import UseQueryDemo from "./views/UseQuery/UseQueryDemo";
+import VirtualListDemo from "./views/VirtualList/VirtualListDemo";
 
 function App() {
   return (
@@ -48,7 +49,8 @@ function App() {
       {/* <ThrottlePromise /> */}
       {/* <HammingWeight /> */}
       {/* <TwoPointer /> */}
-      <UseQueryDemo />
+      {/* <UseQueryDemo /> */}
+      <VirtualListDemo />
     </>
   );
 }
