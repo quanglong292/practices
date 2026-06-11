@@ -22,6 +22,7 @@ import HammingWeight from "./views/HammingWeight/HammingWeight";
 import TwoPointer from "./views/TwoPointer/TwoPointer";
 import UseQueryDemo from "./views/UseQuery/UseQueryDemo";
 import VirtualListDemo from "./views/VirtualList/VirtualListDemo";
+import VirtualListV2 from "./views/VirtualList/VirtualListV2";
 
 function App() {
   return (
@@ -50,7 +51,8 @@ function App() {
       {/* <HammingWeight /> */}
       {/* <TwoPointer /> */}
       {/* <UseQueryDemo /> */}
-      <VirtualListDemo />
+      {/* <VirtualListDemo /> */}
+      <VirtualListV2 />
     </>
   );
 }
