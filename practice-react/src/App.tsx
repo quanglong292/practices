@@ -23,6 +23,7 @@ import TwoPointer from "./views/TwoPointer/TwoPointer";
 import UseQueryDemo from "./views/UseQuery/UseQueryDemo";
 import VirtualListDemo from "./views/VirtualList/VirtualListDemo";
 import VirtualListV2 from "./views/VirtualList/VirtualListV2";
+import BackTrackVisualizer from "./views/BackTracking/BackTrackVisualizer";
 
 function App() {
   return (
@@ -52,7 +53,8 @@ function App() {
       {/* <TwoPointer /> */}
       {/* <UseQueryDemo /> */}
       {/* <VirtualListDemo /> */}
-      <VirtualListV2 />
+      {/* <VirtualListV2 /> */}
+      <BackTrackVisualizer />
     </>
   );
 }
