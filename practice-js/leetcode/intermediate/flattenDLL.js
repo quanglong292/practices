@@ -121,3 +121,46 @@ var flatten2 = function (head) {
   flattenDFS(head);
   return head;
 };
+
+// current = 2
+// last = 2
+// nextNode = 2.next
+// childNode = 2.child
+// childTail = flattenDFS(2.child)
+// 2.next = childNode
+// childNode.prev = 2
+
+var flatten3 = function (head) {
+  if (!head) return null;
+
+  const flattenDFS = (node) => {
+    let current = node;
+    let last = node;
+    let tempNext = null;
+
+    while (current) {
+      let nextNode = current.next;
+      let childNode = current.child;
+
+      if (childNode) {
+        tempNext = nextNode;
+        let childTail = flattenDFS(childNode);
+
+        if (childTail) {
+          childTail.prev = current
+          current.next = childNode
+          tempNext = null;
+        }
+      } else {
+        last = current;
+        current = current.next;
+      }
+    }
+
+    return last;
+  }
+
+  flattenDFS(head);
+
+  return head;
+}
