@@ -136,25 +136,28 @@ var flatten3 = function (head) {
   const flattenDFS = (node) => {
     let current = node;
     let last = node;
-    let tempNext = null;
 
     while (current) {
       let nextNode = current.next;
       let childNode = current.child;
 
       if (childNode) {
-        tempNext = nextNode;
         let childTail = flattenDFS(childNode);
 
-        if (childTail) {
-          childTail.prev = current
-          current.next = childNode
-          tempNext = null;
+        // Link current node to child
+        current.next = childNode
+        childNode.prev = current;
+
+        // Link next node of current to tail
+        if (nextNode) {
+          childTail.next = nextNode
+          nextNode.prev = childTail
         }
       } else {
         last = current;
-        current = current.next;
       }
+
+      current = nextNode;
     }
 
     return last;
@@ -164,3 +167,45 @@ var flatten3 = function (head) {
 
   return head;
 }
+
+var flatten4 = function (head) {
+  if (!head) return null;
+
+  const flattenDFS = (node) => {
+    let current = node;
+    let last = node;
+
+    while (current) {
+      let nextNode = current.next
+      let childNode = current.child
+
+      if (childNode) {
+        let childTail = flattenDFS(childNode)
+
+        current.next = childNode;
+        childNode.prev = current;
+
+        if (nextNode) {
+          childTail.next = nextNode;
+          nextNode.prev = childTail;
+        }
+
+        current.child = null;
+        last = childTail;
+      }
+      else {
+        last = current
+      }
+
+      current = nextNode;
+    }
+
+    return last;
+  }
+
+  flattenDFS(head)
+  return head;
+}
+
+// The linked list[1, 2, 3, 7, 8, 11, 12, 9, 10, 4, 5, 6] is not a valid doubly linked list.
+// [1, 2, 3, 7, 8, 11, 12, 9, 10, 4, 5, 6]
