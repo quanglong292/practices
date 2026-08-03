@@ -1,1 +1,3 @@
-export class CreateDogDto {}
+export class CreateDogDto {
+  id: string;
+}
