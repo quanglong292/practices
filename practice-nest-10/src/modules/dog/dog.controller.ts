@@ -18,7 +18,7 @@ export class DogController {
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly dogService: DogService,
-  ) {}
+  ) { }
 
   @Post()
   async create(@Body() createDogDto: CreateDogDto) {
@@ -35,7 +35,7 @@ export class DogController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const getFromCache = await this.cacheManager.get('test-key');
-    console.log({ getFromCache });
+    console.log('FROM CACHE:', { getFromCache });
     return this.dogService.findOne(+id);
   }
 

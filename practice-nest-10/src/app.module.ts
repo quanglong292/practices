@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DogModule } from './modules/dog/dog.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       isGlobal: true,
     }),
     DogModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
