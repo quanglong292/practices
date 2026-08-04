@@ -62,14 +62,12 @@ add(5);
 
 undo();
 add(6);
-add(7); // 
-undo()
-add(8); // 
+add(7); //
+undo();
+add(8); //
 redo();
 // redo();
 
 // console.log({ current, history });
 
 // add(6);
-
-debugger;

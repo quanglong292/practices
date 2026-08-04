@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "32fb4390ae137dd9",
+    "id": "9c28e7d15d117b39",
     "type": "split",
     "children": [
       {
-        "id": "db5621806a463853",
+        "id": "80bd6ffffaa2ddce",
         "type": "tabs",
         "children": [
           {
-            "id": "236c8f46449ef865",
+            "id": "e23a929275368224",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AGENT.md",
+                "file": "leetcode/hard/sliding_window_maximum_guide.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AGENT"
+              "title": "sliding_window_maximum_guide"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "bcb82e31bedf7193",
+    "id": "96e0dffa60c62f5f",
     "type": "split",
     "children": [
       {
-        "id": "22358975f0f66761",
+        "id": "803b3e2fc4d6419a",
         "type": "tabs",
         "children": [
           {
-            "id": "33581943dd86024f",
+            "id": "6f777c0ef9132ff6",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -50,7 +50,7 @@
             }
           },
           {
-            "id": "e4e5cca7dd550263",
+            "id": "2aa3a4c8d47127e2",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -67,11 +67,14 @@
             }
           },
           {
-            "id": "b7cb16a7d9fc79d6",
+            "id": "e86f4b1362489aac",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {},
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
               "icon": "lucide-bookmark",
               "title": "Bookmarks"
             }
@@ -83,20 +86,20 @@
     "width": 300
   },
   "right": {
-    "id": "260f1f78d48011b5",
+    "id": "81277355776c4825",
     "type": "split",
     "children": [
       {
-        "id": "40dabb6a742f9efd",
+        "id": "20247641570b6323",
         "type": "tabs",
         "children": [
           {
-            "id": "3599866b5f8c106b",
+            "id": "14641cc359d50d00",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "AGENT.md",
+                "file": "leetcode/hard/sliding_window_maximum_guide.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -106,25 +109,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for AGENT"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "6f034a5f5d12e905",
+            "id": "4bd9cef39876d626",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "AGENT.md",
+                "file": "leetcode/hard/sliding_window_maximum_guide.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from AGENT"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "017d89cd74957751",
+            "id": "3c6e4af18524ff82",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -139,7 +142,7 @@
             }
           },
           {
-            "id": "acf592b1b183d727",
+            "id": "61832be4b0605c0d",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -153,18 +156,18 @@
             }
           },
           {
-            "id": "6f13baf2833ad15f",
+            "id": "7e77b3d44819f8a5",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "AGENT.md",
+                "file": "leetcode/hard/sliding_window_maximum_guide.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of AGENT"
+              "title": "Outline"
             }
           }
         ]
@@ -185,19 +188,13 @@
       "bases:Create new base": false
     }
   },
-  "active": "236c8f46449ef865",
+  "active": "e23a929275368224",
   "lastOpenFiles": [
-    "dist/tsconfig.build.tsbuildinfo",
-    "dist/modules/dog/entities/dog.entity.js.map",
-    "dist/modules/dog/entities/dog.entity.js",
-    "dist/modules/dog/entities/dog.entity.d.ts",
-    "dist/modules/dog/entities",
-    "dist/main.d.ts",
-    "dist/main.js",
-    "dist/main.js.map",
-    "dist/app.module.d.ts",
-    "dist/app.module.js",
-    "dist/app.module.js.map",
-    "README.md"
+    "AGENT.md",
+    "leetcode/hard/sliding_window_maximum_visualizer.html",
+    "leetcode/hard/sliding_window_maximum_guide.md",
+    "leetcode/hard/maxK.js",
+    "leetcode/hard/sliding_window_maximum.md",
+    "leetcode/hard"
   ]
 }

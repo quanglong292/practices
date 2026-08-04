@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sliding Window Maximum - Step-by-Step Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    header {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: #0284c7;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .subtitle {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* Layout Horizontal Split */
+    .visualizer-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex: 1;
+    }
+
+    /* Left Panel: Code Execution */
+    .panel {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .code-box {
+      background: #030712;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      flex: 1;
+    }
+    .code-line {
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: pre;
+      color: #9ca3af;
+      transition: background 0.2s, color 0.2s;
+    }
+    .code-line.active {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      font-weight: 600;
+      border-left: 3px solid #38bdf8;
+    }
+
+    /* Right Panel: Data Visualization */
+    .vis-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .section-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .card-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Array Display */
+    .array-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      position: relative;
+      padding: 8px 0;
+    }
+    .array-item {
+      width: 48px;
+      height: 54px;
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fira Code', monospace;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .array-item .val {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .array-item .idx {
+      font-size: 0.65rem;
+      color: #64748b;
+    }
+    .array-item.in-window {
+      background: #1e3a8a;
+      border-color: #3b82f6;
+    }
+    .array-item.current-pointer {
+      border-color: #f59e0b;
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    }
+    .array-item.is-max {
+      background: #065f46;
+      border-color: #10b981;
+      color: #ecfdf5;
+    }
+
+    /* Deque Display */
+    .deque-container {
+      display: flex;
+      gap: 8px;
+      min-height: 54px;
+      align-items: center;
+      background: #0f172a;
+      border: 1px dashed #475569;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .deque-item {
+      background: #312e81;
+      border: 1px solid #6366f1;
+      color: #e0e7ff;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    .deque-item.front {
+      border-color: #10b981;
+      background: #047857;
+    }
+
+    /* Results */
+    .result-container {
+      display: flex;
+      gap: 8px;
+      min-height: 40px;
+      align-items: center;
+    }
+    .result-item {
+      background: #065f46;
+      border: 1px solid #10b981;
+      color: #ecfdf5;
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Note Box */
+    .note-box {
+      background: #030712;
+      border-left: 4px solid #38bdf8;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    /* Toolbar Controls */
+    .toolbar {
+      margin-top: 16px;
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+    button {
+      background: #1e293b;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    button:hover:not(:disabled) {
+      background: #334155;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    button.primary {
+      background: #0284c7;
+      border-color: #0369a1;
+    }
+    button.primary:hover:not(:disabled) {
+      background: #0369a1;
+    }
+    .step-counter {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Sliding Window Maximum <span class="badge">LeetCode #239 - Hard</span></h1>
+    <div class="subtitle">Trực quan hóa thuật toán Monotonic Deque O(N) song song với luồng Code</div>
+  </header>
+
+  <div class="visualizer-container">
+    <!-- Left: Code Execution Panel -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>JavaScript Source Code</span>
+        <span style="font-size: 0.75rem; color: #38bdf8;">Time Complexity: O(N)</span>
+      </div>
+      <div class="code-box" id="codeBox">
+        <div class="code-line" id="L1">const findMaxofKWindow = (numbersArray, windowSize) => {</div>
+        <div class="code-line" id="L2">  const resultMaximums = [];</div>
+        <div class="code-line" id="L3">  const monotonicDequeIndices = [];</div>
+        <div class="code-line" id="L4">  for (let currentIndex = 0; currentIndex < numbersArray.length; currentIndex++) {</div>
+        <div class="code-line" id="L5">    const currentNumber = numbersArray[currentIndex];</div>
+        <div class="code-line" id="L6">    const windowStartBoundaryIndex = currentIndex - windowSize + 1;</div>
+        <div class="code-line" id="L7">    if (monotonicDequeIndices.length > 0) {</div>
+        <div class="code-line" id="L8">      if (monotonicDequeIndices[0] < windowStartBoundaryIndex) {</div>
+        <div class="code-line" id="L9">        monotonicDequeIndices.shift(); // Expired out of window</div>
+        <div class="code-line" id="L10">      }</div>
+        <div class="code-line" id="L11">    }</div>
+        <div class="code-line" id="L12">    while (monotonicDequeIndices.length > 0) {</div>
+        <div class="code-line" id="L13">      const lastValue = numbersArray[monotonicDequeIndices[monotonicDequeIndices.length - 1]];</div>
+        <div class="code-line" id="L14">      if (lastValue <= currentNumber) {</div>
+        <div class="code-line" id="L15">        monotonicDequeIndices.pop(); // Remove smaller elements</div>
+        <div class="code-line" id="L16">      } else { break; }</div>
+        <div class="code-line" id="L17">    }</div>
+        <div class="code-line" id="L18">    monotonicDequeIndices.push(currentIndex);</div>
+        <div class="code-line" id="L19">    if (currentIndex >= windowSize - 1) {</div>
+        <div class="code-line" id="L20">      resultMaximums.push(numbersArray[monotonicDequeIndices[0]]);</div>
+        <div class="code-line" id="L21">    }</div>
+        <div class="code-line" id="L22">  }</div>
+        <div class="code-line" id="L23">  return resultMaximums;</div>
+        <div class="code-line" id="L24">};</div>
+      </div>
+    </div>
+
+    <!-- Right: Visualization Panel -->
+    <div class="panel">
+      <div class="panel-title">Interactive Data Visualization</div>
+      <div class="vis-box">
+        
+        <!-- Array & Window Box -->
+        <div class="section-card">
+          <div class="card-label">
+            <span>INPUT ARRAY & SLIDING WINDOW (K = 3)</span>
+            <span id="windowInfo" style="color: #38bdf8;">Window Boundary: N/A</span>
+          </div>
+          <div class="array-container" id="arrayContainer"></div>
+        </div>
+
+        <!-- Monotonic Deque Box -->
+        <div class="section-card">
+          <div class="card-label">
+            <span>MONOTONIC DEQUE (Storing Indices in Decreasing Order of Values)</span>
+            <span style="color: #10b981;">Front = Max Element Index</span>
+          </div>
+          <div class="deque-container" id="dequeContainer"></div>
+        </div>
+
+        <!-- Output Result Box -->
+        <div class="section-card">
+          <div class="card-label">RESULT MAXIMUMS ARRAY</div>
+          <div class="result-container" id="resultContainer"></div>
+        </div>
+
+        <!-- Step Explanation Note -->
+        <div class="note-box" id="noteBox">
+          Nhấn <strong>Play</strong> hoặc <strong>Next Step</strong> để bắt đầu mô phỏng từng bước giải thuật.
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toolbar Controls -->
+  <div class="toolbar">
+    <div class="btn-group">
+      <button id="btnPrev" onclick="prevStep()">⏮ Previous</button>
+      <button id="btnPlay" class="primary" onclick="togglePlay()">▶ Play</button>
+      <button id="btnNext" onclick="nextStep()">Next ⏭</button>
+      <button id="btnReset" onclick="resetSim()">🔄 Reset</button>
+    </div>
+    <div class="step-counter" id="stepCounter">Step: 0 / 0</div>
+  </div>
+
+  <script>
+    const sampleNumbers = [1, 3, -1, -3, 5, 3, 6, 7];
+    const K = 3;
+
+    let steps = [];
+    let currentStepIndex = 0;
+    let isPlaying = false;
+    let playInterval = null;
+
+    // Generate Trace Steps
+    function buildTraceSteps(nums, k) {
+      const trace = [];
+      const deque = [];
+      const result = [];
+
+      trace.push({
+        line: 'L1',
+        currentIndex: -1,
+        deque: [],
+        result: [],
+        note: `Khởi tạo thuật toán với mảng [${nums.join(', ')}] và kích thước cửa sổ K = ${k}.`
+      });
+
+      for (let i = 0; i < nums.length; i++) {
+        const num = nums[i];
+        const windowStart = i - k + 1;
+
+        trace.push({
+          line: 'L4',
+          currentIndex: i,
+          deque: [...deque],
+          result: [...result],
+          note: `Vòng lặp tới currentIndex = ${i} (giá trị num = ${num}).`
+        });
+
+        // Expired check
+        if (deque.length > 0 && deque[0] < windowStart) {
+          const expiredIdx = deque.shift();
+          trace.push({
+            line: 'L9',
+            currentIndex: i,
+            deque: [...deque],
+            result: [...result],
+            note: `Chỉ số ${expiredIdx} ở đầu Deque đã quá hạn (nằm ngoài cửa sổ [${windowStart}..${i}]). Thực hiện shift() loại bỏ.`
+          });
+        }
+
+        // Maintain monotonic order
+        while (deque.length > 0 && nums[deque[deque.length - 1]] <= num) {
+          const poppedIdx = deque.pop();
+          trace.push({
+            line: 'L15',
+            currentIndex: i,
+            deque: [...deque],
+            result: [...result],
+            note: `Phần tử nums[${poppedIdx}] = ${nums[poppedIdx]} <= num (${num}). Thực hiện pop() khỏi Deque để duy trì thứ tự đơn điệu giảm.`
+          });
+        }
+
+        // Push current index
+        deque.push(i);
+        trace.push({
+          line: 'L18',
+          currentIndex: i,
+          deque: [...deque],
+          result: [...result],
+          note: `Đẩy currentIndex = ${i} (giá trị ${num}) vào đuôi Deque.`
+        });
+
+        // Collect result
+        if (i >= k - 1) {
+          const maxVal = nums[deque[0]];
+          result.push(maxVal);
+          trace.push({
+            line: 'L20',
+            currentIndex: i,
+            deque: [...deque],
+            result: [...result],
+            note: `Cửa sổ [${windowStart}..${i}] đã đủ K phần tử. Đầu Deque (index ${deque[0]}) mang giá trị Max = ${maxVal}. Thêm vào kết quả.`
+          });
+        }
+      }
+
+      trace.push({
+        line: 'L23',
+        currentIndex: nums.length - 1,
+        deque: [...deque],
+        result: [...result],
+        note: `Hoàn tất thuật toán! Kết quả danh sách Max thu được: [${result.join(', ')}].`
+      });
+
+      return trace;
+    }
+
+    function renderStep(stepIndex) {
+      const step = steps[stepIndex];
+
+      // Highlight code line
+      document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+      if (step.line) {
+        const lineEl = document.getElementById(step.line);
+        if (lineEl) lineEl.classList.add('active');
+      }
+
+      // Render Array
+      const arrayContainer = document.getElementById('arrayContainer');
+      arrayContainer.innerHTML = '';
+      const windowStart = Math.max(0, step.currentIndex - K + 1);
+      const windowEnd = step.currentIndex;
+      const isWindowValid = step.currentIndex >= K - 1;
+
+      sampleNumbers.forEach((val, idx) => {
+        const item = document.createElement('div');
+        item.className = 'array-item';
+
+        const inWindow = isWindowValid && idx >= windowStart && idx <= windowEnd;
+        if (inWindow) item.classList.add('in-window');
+        if (idx === step.currentIndex) item.classList.add('current-pointer');
+        if (step.deque.length > 0 && idx === step.deque[0] && isWindowValid) {
+          item.classList.add('is-max');
+        }
+
+        item.innerHTML = `<span class="val">${val}</span><span class="idx">i=${idx}</span>`;
+        arrayContainer.appendChild(item);
+      });
+
+      // Window Info
+      document.getElementById('windowInfo').textContent = isWindowValid
+        ? `Active Window Index: [${windowStart} .. ${windowEnd}]`
+        : `Building Window... (${step.currentIndex + 1}/${K})`;
+
+      // Render Deque
+      const dequeContainer = document.getElementById('dequeContainer');
+      dequeContainer.innerHTML = '';
+      if (step.deque.length === 0) {
+        dequeContainer.innerHTML = '<span style="color: #64748b; font-size: 0.8rem; padding: 4px;">Deque empty</span>';
+      } else {
+        step.deque.forEach((idxInDeque, dPos) => {
+          const item = document.createElement('div');
+          item.className = 'deque-item' + (dPos === 0 ? ' front' : '');
+          item.innerHTML = `<span>Index: ${idxInDeque}</span><span style="font-size:0.7rem; color:#a5b4fc;">Val: ${sampleNumbers[idxInDeque]}</span>`;
+          dequeContainer.appendChild(item);
+        });
+      }
+
+      // Render Result
+      const resultContainer = document.getElementById('resultContainer');
+      resultContainer.innerHTML = '';
+      if (step.result.length === 0) {
+        resultContainer.innerHTML = '<span style="color: #64748b; font-size: 0.8rem;">Chưa có kết quả</span>';
+      } else {
+        step.result.forEach(val => {
+          const item = document.createElement('div');
+          item.className = 'result-item';
+          item.textContent = val;
+          resultContainer.appendChild(item);
+        });
+      }
+
+      // Note Box & Counter
+      document.getElementById('noteBox').innerHTML = step.note;
+      document.getElementById('stepCounter').textContent = `Step: ${stepIndex + 1} / ${steps.length}`;
+
+      // Update button states
+      document.getElementById('btnPrev').disabled = (stepIndex === 0);
+      document.getElementById('btnNext').disabled = (stepIndex === steps.length - 1);
+    }
+
+    function nextStep() {
+      if (currentStepIndex < steps.length - 1) {
+        currentStepIndex++;
+        renderStep(currentStepIndex);
+      } else {
+        pause();
+      }
+    }
+
+    function prevStep() {
+      if (currentStepIndex > 0) {
+        currentStepIndex--;
+        renderStep(currentStepIndex);
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        pause();
+      } else {
+        play();
+      }
+    }
+
+    function play() {
+      if (currentStepIndex >= steps.length - 1) currentStepIndex = 0;
+      isPlaying = true;
+      document.getElementById('btnPlay').textContent = '⏸ Pause';
+      playInterval = setInterval(() => {
+        if (currentStepIndex < steps.length - 1) {
+          nextStep();
+        } else {
+          pause();
+        }
+      }, 1200);
+    }
+
+    function pause() {
+      isPlaying = false;
+      document.getElementById('btnPlay').textContent = '▶ Play';
+      if (playInterval) clearInterval(playInterval);
+    }
+
+    function resetSim() {
+      pause();
+      currentStepIndex = 0;
+      renderStep(currentStepIndex);
+    }
+
+    // Init
+    window.addEventListener('DOMContentLoaded', () => {
+      steps = buildTraceSteps(sampleNumbers, K);
+      renderStep(0);
+    });
+  </script>
+</body>
+</html>
