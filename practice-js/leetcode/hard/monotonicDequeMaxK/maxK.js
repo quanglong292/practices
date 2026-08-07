@@ -12,39 +12,37 @@
  */
 const findMaxofKWindow = (nums, k) => {
   const resultMaximums = [];
-  const monotonicDequeIndices = [];
+  const queue = [];
 
-  for (let currentIndex = 0; currentIndex < nums.length; currentIndex++) {
-    const currentNumber = nums[currentIndex];
-    const windowStartBoundaryIndex = currentIndex - k + 1;
+  for (let i = 0; i < nums.length; i++) {
+    const currentNumber = nums[i];
+    const windowStartBoundaryIndex = i - k + 1;
 
-    // 1. Remove expired index out of current window bounds from front of Deque
-    if (monotonicDequeIndices.length > 0) {
-      const oldestIndexInDeque = monotonicDequeIndices[0];
+    if (queue.length > 0) {
+      const oldestIndexInDeque = queue[0];
       if (oldestIndexInDeque < windowStartBoundaryIndex) {
-        monotonicDequeIndices.shift();
+        queue.shift();
       }
     }
 
     // 2. Maintain Monotonic Decreasing order by popping smaller elements from back of Deque
-    while (monotonicDequeIndices.length > 0) {
-      const lastIndexInDeque =
-        monotonicDequeIndices[monotonicDequeIndices.length - 1];
+    while (queue.length > 0) {
+      const lastIndexInDeque = queue[queue.length - 1];
       const lastValueInDeque = nums[lastIndexInDeque];
 
       if (lastValueInDeque <= currentNumber) {
-        monotonicDequeIndices.pop();
+        queue.pop();
       } else {
         break;
       }
     }
 
     // 3. Push current index into back of Deque
-    monotonicDequeIndices.push(currentIndex);
-    console.log({ monotonicDequeIndices });
+    queue.push(i);
+    console.log({ queue });
 
     // 4. Record maximum value when window size reaches k elements
-    if (currentIndex >= k - 1) {
+    if (i >= k - 1) {
       const maxIndexInCurrentWindow = monotonicDequeIndices[0];
       const maxValueInCurrentWindow = nums[maxIndexInCurrentWindow];
       resultMaximums.push(maxValueInCurrentWindow);

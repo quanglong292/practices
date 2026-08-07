@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "leetcode/hard/sliding_window_maximum_guide.md",
+                "file": "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_guide.md",
                 "mode": "source",
                 "source": false
               },
@@ -83,7 +83,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "81277355776c4825",
@@ -190,9 +191,14 @@
   },
   "active": "e23a929275368224",
   "lastOpenFiles": [
+    "leetcode/hard/sliding_window_maximum_guide.md",
+    "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_visualizer.html",
+    "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_guide.md",
+    "leetcode/hard/monotonicDequeMaxK/maxK.js",
+    "leetcode/hard/monotonicDequeMaxK",
+    "leetcode/hard/monotonicDequeMaxK.js",
     "AGENT.md",
     "leetcode/hard/sliding_window_maximum_visualizer.html",
-    "leetcode/hard/sliding_window_maximum_guide.md",
     "leetcode/hard/maxK.js",
     "leetcode/hard/sliding_window_maximum.md",
     "leetcode/hard"
