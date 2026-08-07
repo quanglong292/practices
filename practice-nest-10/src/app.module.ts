@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { DogModule } from './modules/dog/dog.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
     }),
     DogModule,
     AnalyticsModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -15,8 +15,6 @@ const findMaxofKWindow = (nums, k) => {
   const monotonicDequeIndices = [];
 
   for (let currentIndex = 0; currentIndex < nums.length; currentIndex++) {
-    debugger;
-
     const currentNumber = nums[currentIndex];
     const windowStartBoundaryIndex = currentIndex - k + 1;
 
@@ -43,6 +41,7 @@ const findMaxofKWindow = (nums, k) => {
 
     // 3. Push current index into back of Deque
     monotonicDequeIndices.push(currentIndex);
+    console.log({ monotonicDequeIndices });
 
     // 4. Record maximum value when window size reaches k elements
     if (currentIndex >= k - 1) {
@@ -50,6 +49,8 @@ const findMaxofKWindow = (nums, k) => {
       const maxValueInCurrentWindow = nums[maxIndexInCurrentWindow];
       resultMaximums.push(maxValueInCurrentWindow);
     }
+
+    debugger;
   }
 
   return resultMaximums;
