@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AGENT.md",
+                "file": "agents/AGENT.md",
                 "mode": "source",
                 "source": false
               },
@@ -187,6 +187,9 @@
   },
   "active": "236c8f46449ef865",
   "lastOpenFiles": [
+    "agents/notes/hrm-db-erd.md",
+    "agents/AGENT.md",
+    "agents/notes",
     "dist/tsconfig.build.tsbuildinfo",
     "dist/modules/dog/entities/dog.entity.js.map",
     "dist/modules/dog/entities/dog.entity.js",
@@ -196,8 +199,6 @@
     "dist/main.js",
     "dist/main.js.map",
     "dist/app.module.d.ts",
-    "dist/app.module.js",
-    "dist/app.module.js.map",
     "README.md"
   ]
 }
