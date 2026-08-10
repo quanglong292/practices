@@ -5,6 +5,7 @@ import { DogModule } from './modules/dog/dog.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { UserModule } from './modules/user/user.module';
+import { PrismaModule } from './shared/prisma/prisma.module.js';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from './modules/user/user.module';
       ttl: 30000,
       isGlobal: true,
     }),
+    PrismaModule,
     DogModule,
     AnalyticsModule,
     UserModule,

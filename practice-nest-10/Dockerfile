@@ -27,6 +27,7 @@ FROM node:22-alpine AS runner
 WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
+ENV PORT=3000
 
 RUN corepack enable
 
