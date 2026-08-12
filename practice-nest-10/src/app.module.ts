@@ -6,6 +6,8 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { UserModule } from './modules/user/user.module';
 import { PrismaModule } from './shared/prisma/prisma.module.js';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './core/exceptions/http-exception.filter';
 
 @Module({
   imports: [
@@ -21,6 +23,12 @@ import { PrismaModule } from './shared/prisma/prisma.module.js';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

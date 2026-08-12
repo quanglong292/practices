@@ -21,9 +21,10 @@ export class UserController {
     return this.userService.createUser(createUserDto);
   }
 
-  // @Get()
+  // @Get('/all')
   // findAll() {
-  //   return this.userService.findAll();
+  //   // return this.userService.findAll();
+  //   // throw Error("Thi")
   // }
 
   @Get(':id')
