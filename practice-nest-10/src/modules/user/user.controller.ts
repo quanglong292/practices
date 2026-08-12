@@ -6,9 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Prisma } from 'src/shared/database/generated/prisma/client';
+import { TransformInterceptor } from 'src/core/interceptors/transform.interceptor';
 
 @Controller('user')
 export class UserController {
@@ -19,16 +21,19 @@ export class UserController {
     return this.userService.createUser(createUserDto);
   }
 
-  // @Get()
+  // @Get('/all')
   // findAll() {
-  //   return this.userService.findAll();
+  //   // return this.userService.findAll();
+  //   // throw Error("Thi")
   // }
 
   @Get(':id')
+  @UseInterceptors(TransformInterceptor)
   findOne(@Param('id') id: string) {
-    return this.userService.user({
-      id: +id,
-    });
+    return { id };
+    // return this.userService.user({
+    //   id: +id,
+    // });
   }
 
   // @Patch(':id')

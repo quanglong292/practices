@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subarray Sum Equals K - Visualization</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --card-bg: #1e293b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --border: #334155;
+      --highlight: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #60a5fa, #34d399);
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: #94a3b8;
+    }
+
+    .controls {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    input {
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      margin-top: 1.25rem;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    button:disabled {
+      background-color: #475569;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .visualization {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .panel {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .array-container {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .array-element {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .array-element.active {
+      border-color: var(--highlight);
+      background-color: rgba(245, 158, 11, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.2);
+    }
+
+    .array-element .index {
+      position: absolute;
+      bottom: -25px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .variables {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .var-box {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      border-radius: 8px;
+      flex: 1;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .var-title {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+    }
+
+    .var-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+    
+    .var-value.highlight-total {
+      color: var(--accent);
+    }
+
+    .hash-map {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .map-entry {
+      display: flex;
+      justify-content: space-between;
+      background-color: var(--bg);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border-left: 4px solid var(--primary);
+      transition: all 0.3s;
+    }
+    
+    .map-entry.new-entry {
+      animation: pulse 1s ease-out;
+    }
+    
+    .map-entry.matched-entry {
+      border-left-color: var(--accent);
+      background-color: rgba(16, 185, 129, 0.1);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+      50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+    }
+
+    .map-key {
+      color: #94a3b8;
+      font-family: monospace;
+      font-size: 1.1rem;
+    }
+
+    .map-val {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .log-panel {
+      background-color: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      height: 250px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+    }
+    
+    .log-line {
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .log-line:last-child {
+      border-bottom: none;
+    }
+    
+    .log-success {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    .empty-map {
+      color: #64748b;
+      font-style: italic;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .visualization {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Subarray Sum Equals K</h1>
+      <p class="subtitle">Prefix Sum + Hash Map Algorithm Visualization (O(n))</p>
+    </header>
+
+    <div class="controls">
+      <div class="input-group">
+        <label for="numsInput">Array (comma separated)</label>
+        <input type="text" id="numsInput" value="1, 1, 1" style="width: 250px;">
+      </div>
+      <div class="input-group">
+        <label for="kInput">Target K</label>
+        <input type="number" id="kInput" value="2" style="width: 100px;">
+      </div>
+      <button id="startBtn">Start / Reset</button>
+      <button id="nextBtn" disabled>Next Step</button>
+      <button id="playBtn" disabled class="btn-secondary">Auto Play</button>
+    </div>
+
+    <div class="visualization">
+      <div class="panel">
+        <h2 class="panel-title">Execution State</h2>
+        
+        <div class="array-container" id="arrayView">
+          <!-- Array elements will be injected here -->
+        </div>
+
+        <div class="variables">
+          <div class="var-box">
+            <div class="var-title">currentSum</div>
+            <div class="var-value" id="currentSumVal">0</div>
+          </div>
+          <div class="var-box">
+            <div class="var-title">currentSum - k</div>
+            <div class="var-value" id="diffVal">-</div>
+          </div>
+          <div class="var-box">
+            <div class="var-title">Total Result</div>
+            <div class="var-value" id="totalVal">0</div>
+          </div>
+        </div>
+
+        <h3 class="panel-title" style="font-size: 1.1rem; border: none; margin-bottom: 0.5rem;">Execution Logs</h3>
+        <div class="log-panel" id="logView">
+          <!-- Logs will be injected here -->
+          <div style="color: #64748b; font-style: italic;">Press Start to begin...</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 class="panel-title">Prefix Sums (Hash Map)</h2>
+        <div class="hash-map" id="mapView">
+          <div class="empty-map">Map is empty</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State variables
+    let nums = [];
+    let k = 0;
+    let i = -1;
+    let currentSum = 0;
+    let total = 0;
+    let prefixSums = new Map();
+    let isPlaying = false;
+    let playInterval;
+
+    // DOM Elements
+    const numsInput = document.getElementById('numsInput');
+    const kInput = document.getElementById('kInput');
+    const startBtn = document.getElementById('startBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playBtn = document.getElementById('playBtn');
+    const arrayView = document.getElementById('arrayView');
+    const currentSumVal = document.getElementById('currentSumVal');
+    const diffVal = document.getElementById('diffVal');
+    const totalVal = document.getElementById('totalVal');
+    const mapView = document.getElementById('mapView');
+    const logView = document.getElementById('logView');
+
+    function init() {
+      // Parse inputs
+      const rawStr = numsInput.value.replace(/[\[\]]/g, '');
+      nums = rawStr.split(',').map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+      k = parseInt(kInput.value);
+
+      if (nums.length === 0 || isNaN(k)) {
+        alert("Please enter valid numbers");
+        return;
+      }
+
+      // Reset state
+      i = -1;
+      currentSum = 0;
+      total = 0;
+      prefixSums = new Map();
+      
+      // Initialize map with {0: 1} to handle subarrays starting from index 0
+      prefixSums.set(0, 1);
+
+      // Render initial state
+      renderArray();
+      updateVars();
+      renderMap();
+      
+      logView.innerHTML = '';
+      log("Initialized Hash Map with { prefix_sum: 0, count: 1 }.");
+      log(`Target k = ${k}. Ready to iterate through array.`);
+
+      nextBtn.disabled = false;
+      playBtn.disabled = false;
+      playBtn.innerText = "Auto Play";
+      isPlaying = false;
+      clearInterval(playInterval);
+    }
+
+    function renderArray() {
+      arrayView.innerHTML = '';
+      nums.forEach((num, index) => {
+        const el = document.createElement('div');
+        el.className = `array-element ${index === i ? 'active' : ''}`;
+        el.innerHTML = `
+          ${num}
+          <div class="index">i=${index}</div>
+        `;
+        arrayView.appendChild(el);
+      });
+    }
+
+    function updateVars() {
+      currentSumVal.innerText = currentSum;
+      const diff = currentSum - k;
+      diffVal.innerText = i >= 0 ? diff : '-';
+      totalVal.innerText = total;
+    }
+
+    function renderMap(highlightKey = null, matchedKey = null) {
+      mapView.innerHTML = '';
+      
+      if (prefixSums.size === 0) {
+        mapView.innerHTML = '<div class="empty-map">Map is empty</div>';
+        return;
+      }
+
+      for (let [key, val] of prefixSums.entries()) {
+        const entry = document.createElement('div');
+        let classes = 'map-entry';
+        if (key === matchedKey) classes += ' matched-entry';
+        else if (key === highlightKey) classes += ' new-entry';
+        
+        entry.className = classes;
+        entry.innerHTML = `
+          <span class="map-key">sum = ${key}</span>
+          <span class="map-val">count: ${val}</span>
+        `;
+        mapView.appendChild(entry);
+      }
+    }
+
+    function log(message, isSuccess = false) {
+      const line = document.createElement('div');
+      line.className = `log-line ${isSuccess ? 'log-success' : ''}`;
+      line.innerHTML = message;
+      logView.appendChild(line);
+      logView.scrollTop = logView.scrollHeight;
+    }
+
+    function step() {
+      if (i >= nums.length - 1) {
+        log(`Algorithm completed! Total subarrays found: ${total}`, true);
+        nextBtn.disabled = true;
+        
+        if (isPlaying) {
+          togglePlay();
+        }
+        return;
+      }
+
+      i++;
+      const num = nums[i];
+      currentSum += num;
+      const diff = currentSum - k;
+      
+      let matched = false;
+      let logMsg = `<b>Step i=${i} (num=${num}):</b><br/>`;
+      logMsg += `currentSum = ${currentSum - num} + ${num} = ${currentSum}<br/>`;
+      logMsg += `Need to find (currentSum - k) = ${currentSum} - ${k} = ${diff} in Hash Map.<br/>`;
+
+      if (prefixSums.has(diff)) {
+        const count = prefixSums.get(diff);
+        total += count;
+        matched = true;
+        logMsg += `<span style="color:var(--accent)">Found ${diff} in map with count ${count}!</span> Added to total.`;
+        
+        // Temporarily highlight total
+        totalVal.classList.add('highlight-total');
+        setTimeout(() => totalVal.classList.remove('highlight-total'), 1000);
+      } else {
+        logMsg += `Did not find ${diff} in map.`;
+      }
+
+      // Update map
+      const currentCount = prefixSums.get(currentSum) || 0;
+      prefixSums.set(currentSum, currentCount + 1);
+      
+      logMsg += `<br/>Updated map: set sum ${currentSum} count to ${currentCount + 1}.`;
+
+      // Update UI
+      renderArray();
+      updateVars();
+      renderMap(currentSum, matched ? diff : null);
+      log(logMsg);
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        playBtn.innerText = "Pause";
+        playBtn.classList.remove("btn-secondary");
+        if (i >= nums.length - 1) {
+          init();
+        }
+        playInterval = setInterval(step, 1500);
+      } else {
+        playBtn.innerText = "Auto Play";
+        playBtn.classList.add("btn-secondary");
+        clearInterval(playInterval);
+      }
+    }
+
+    // Event Listeners
+    startBtn.addEventListener('click', init);
+    nextBtn.addEventListener('click', step);
+    playBtn.addEventListener('click', togglePlay);
+    
+    // Initial call just to render structure
+    renderArray();
+  </script>
+</body>
+</html>

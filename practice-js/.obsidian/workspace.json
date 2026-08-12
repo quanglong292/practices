@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "80bd6ffffaa2ddce",
+        "id": "079b92dbce3a5d3c",
         "type": "tabs",
         "children": [
           {
-            "id": "e23a929275368224",
+            "id": "c10f0ea980a76584",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_guide.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "sliding_window_maximum_guide"
+              "title": "New tab"
             }
           }
         ]
@@ -83,8 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "81277355776c4825",
@@ -189,11 +184,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "e23a929275368224",
+  "active": "c10f0ea980a76584",
   "lastOpenFiles": [
+    "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_guide.md",
     "leetcode/hard/sliding_window_maximum_guide.md",
     "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_visualizer.html",
-    "leetcode/hard/monotonicDequeMaxK/sliding_window_maximum_guide.md",
     "leetcode/hard/monotonicDequeMaxK/maxK.js",
     "leetcode/hard/monotonicDequeMaxK",
     "leetcode/hard/monotonicDequeMaxK.js",
