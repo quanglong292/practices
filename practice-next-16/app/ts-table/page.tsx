@@ -87,7 +87,7 @@ export default function Page() {
   // The virtualizer will need a reference to the scrollable container element
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
 
-  const [data, setData] = React.useState<any[]>([]);
+  const [data, setData] = React.useState<Person[]>([]);
 
   const refreshData = React.useCallback(() => {
     setData(makeData(count));

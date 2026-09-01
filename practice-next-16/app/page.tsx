@@ -36,29 +36,37 @@ export default function Home() {
             center.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+        <div className="flex flex-col gap-3 w-full max-w-md pt-2">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/web-payment"
+            className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-md hover:shadow-lg transition-all hover:scale-[1.01]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+                💳
+              </div>
+              <div className="text-left">
+                <div className="font-bold text-sm">Web Payment API POC</div>
+                <div className="text-xs text-blue-100 font-normal">W3C Payment Request, Google Pay, Apple Pay</div>
+              </div>
+            </div>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-white/20 font-semibold">Demo &rarr;</span>
           </a>
+
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/ts-table"
+            className="flex items-center justify-between p-4 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all hover:scale-[1.01]"
           >
-            Documentation
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center text-xl">
+                📊
+              </div>
+              <div className="text-left">
+                <div className="font-bold text-sm text-zinc-900 dark:text-zinc-100">TanStack Virtual Table POC</div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400 font-normal">Virtual scrolling & data table demo</div>
+              </div>
+            </div>
+            <span className="text-xs px-2.5 py-1 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-semibold">&rarr;</span>
           </a>
         </div>
       </main>
