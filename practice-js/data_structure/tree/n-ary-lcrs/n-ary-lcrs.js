@@ -13,6 +13,7 @@ const tree = {
       children: [
         { val: "p", children: [] },
         { val: "a", children: [] },
+        { val: "c", children: [] },
       ],
     },
     {
@@ -45,15 +46,63 @@ const tree = {
 //   return result;
 // }
 
-const transformToLCRS = (root, parent = null) => {
-  if (!root) return;
+function createLcrsNode(val, parent = null) {
+  return {
+    val,
+    child: null,
+    sibling: null,
+    return: parent,
+  };
+}
 
-  if (!parent) {
-    parent = {
-      val: root.val,
-      child: root.children[0],
-      sibling: root.children[1] || null,
-      return: root,
-    };
+function transformToLCRS(naryNode, parent = null) {
+  if (!naryNode) return null;
+
+  // 1. Create the current LCRS node
+  const lcrsNode = createLcrsNode(naryNode.val, parent);
+
+  const children = naryNode.children || [];
+  let prevSibling = null;
+
+  // 2. Iterate through children to build the linked-list chain
+  for (let i = 0; i < children.length; i++) {
+    // Recursively convert the child, passing current lcrsNode as parent
+    const childLcrsNode = transformToLCRS(children[i], lcrsNode);
+
+    if (i === 0) {
+      // First child becomes the 'child' of current node
+      lcrsNode.child = childLcrsNode;
+    } else {
+      // Subsequent children are linked horizontally via 'sibling'
+      prevSibling.sibling = childLcrsNode;
+    }
+
+    prevSibling = childLcrsNode;
   }
+
+  return lcrsNode;
+}
+
+const transformToLCRS2 = (naryNode, parent = null) => {
+  if (!naryNode) return;
+
+  const lcrsNode = createLcrsNode(naryNode.val, parent);
+  const children = naryNode.children;
+  let prevChild = null;
+
+  for (let i = 0; i < children?.length; i++) {
+    const child = transformToLCRS2(children[i], lcrsNode);
+
+    if (i === 0) lcrsNode.child = child;
+    else prevChild.sibling = child;
+
+    prevChild = child;
+  }
+
+  return lcrsNode;
 };
+
+const fiberRoot = transformToLCRS2(tree);
+
+console.log({ fiberRoot });
+debugger;
