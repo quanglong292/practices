@@ -5,7 +5,7 @@
 //   return: LcrsNode | null; // React uses 'return' instead of 'parent'
 // }
 
-const tree = {
+export const tree = {
   val: "div",
   children: [
     {
@@ -83,7 +83,7 @@ function transformToLCRS(naryNode, parent = null) {
   return lcrsNode;
 }
 
-const transformToLCRS2 = (naryNode, parent = null) => {
+export const transformToLCRS2 = (naryNode, parent = null) => {
   if (!naryNode) return;
 
   const lcrsNode = createLcrsNode(naryNode.val, parent);
@@ -103,6 +103,3 @@ const transformToLCRS2 = (naryNode, parent = null) => {
 };
 
 const fiberRoot = transformToLCRS2(tree);
-
-console.log({ fiberRoot });
-debugger;
