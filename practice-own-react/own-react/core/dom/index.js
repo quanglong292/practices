@@ -11,7 +11,7 @@ function createElement(type, props, ...children) {
     },
   }
 }
-​
+
 function createTextElement(text) {
   return {
     type: "TEXT_ELEMENT",
@@ -21,29 +21,29 @@ function createTextElement(text) {
     },
   }
 }
-​
+
 function render(element, container) {
   const dom =
     element.type == "TEXT_ELEMENT"
       ? document.createTextNode("")
       : document.createElement(element.type)
-​
+
   const isProperty = key => key !== "children"
   Object.keys(element.props)
     .filter(isProperty)
     .forEach(name => {
       dom[name] = element.props[name]
     })
-​
+
   element.props.children.forEach(child =>
     render(child, dom)
   )
-​
+
   container.appendChild(dom)
 }
 
 let nextUnitOfWork = null
-​
+
 function workLoop(deadline) {
   let shouldYield = false
   while (nextUnitOfWork && !shouldYield) {
@@ -54,13 +54,13 @@ function workLoop(deadline) {
   }
   requestIdleCallback(workLoop)
 }
-​
+
 requestIdleCallback(workLoop)
-​
+
 function performUnitOfWork(nextUnitOfWork) {
   // TODO
 }
-​
+
 export const Didact = {
   createElement,
   render,

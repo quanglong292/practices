@@ -1,9 +1,9 @@
+/** @jsx Didact.createElement */
 import { Didact } from "./core/dom";
 
-/** @jsx Didact.createElement */
 const element = (
   <div id="foo">
-    <a>bar</a>
+    <a>bar2</a>
     <b />
   </div>
 );
