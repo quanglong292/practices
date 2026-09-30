@@ -245,6 +245,7 @@ function render(element, container) {
 
   deletions = [];
   nextUnitOfWork = wipRoot;
+  console.log({ nextUnitOfWork });
 }
 
 export const Act = {
