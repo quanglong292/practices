@@ -1,40 +1,5 @@
-function createElement(type, props, ...children) {
-  return {
-    type,
-    props: {
-      ...props,
-      children: children.map((child) =>
-        typeof child === "object" ? child : createTextElement(child),
-      ),
-    },
-  };
-}
-
-function createTextElement(text) {
-  return {
-    type: "TEXT_ELEMENT",
-    props: {
-      nodeValue: text,
-      children: [],
-    },
-  };
-}
-
-function createDom(fiber) {
-  const dom =
-    fiber.type === "TEXT_ELEMENT"
-      ? document.createTextNode("")
-      : document.createElement(fiber.type);
-
-  const isProperty = (key) => key !== "children";
-  Object.keys(fiber.props)
-    .filter(isProperty)
-    .forEach((name) => {
-      dom[name] = fiber.props[name];
-    });
-
-  return dom;
-}
+import { reconcileChildren } from "./reconcile";
+import { createDom, createElement, updateDom } from "./dom";
 
 function commitRoot() {
   // 1. Commit all deletions first
@@ -46,47 +11,6 @@ function commitRoot() {
   // 3. Swap the buffer: Current tree becomes the new baseline
   currentRoot = wipRoot;
   wipRoot = null;
-}
-
-const isEvent = (key) => key.startsWith("on");
-const isProperty = (key) => key !== "children" && !isEvent(key);
-const isNew = (prev, next) => (key) => prev[key] !== next[key];
-const isGone = (_, next) => (key) => !(key in next);
-
-function updateDom(dom, prevProps, nextProps) {
-  // 1. Remove old or changed event listeners
-  Object.keys(prevProps)
-    .filter(isEvent)
-    .filter((key) => !(key in nextProps) || isNew(prevProps, nextProps)(key))
-    .forEach((name) => {
-      const eventType = name.toLowerCase().substring(2);
-      dom.removeEventListener(eventType, prevProps[name]);
-    });
-
-  // 2. Remove old properties that no longer exist
-  Object.keys(prevProps)
-    .filter(isProperty)
-    .filter(isGone(prevProps, nextProps))
-    .forEach((name) => {
-      dom[name] = "";
-    });
-
-  // 3. Set new or changed properties
-  Object.keys(nextProps)
-    .filter(isProperty)
-    .filter(isNew(prevProps, nextProps))
-    .forEach((name) => {
-      dom[name] = nextProps[name];
-    });
-
-  // 4. Add new event listeners
-  Object.keys(nextProps)
-    .filter(isEvent)
-    .filter(isNew(prevProps, nextProps))
-    .forEach((name) => {
-      const eventType = name.toLowerCase().substring(2);
-      dom.addEventListener(eventType, nextProps[name]);
-    });
 }
 
 /**
@@ -167,70 +91,6 @@ function performUnitOfWork(fiber) {
   return null;
 }
 
-function reconcileChildren(wipFiber, elements) {
-  let index = 0;
-  // Get the first child of the old fiber from alternate
-  let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
-  let prevSibling = null;
-
-  // Loop through both new elements and old fiber siblings
-  while (index < elements.length || oldFiber != null) {
-    const element = elements[index];
-    let newFiber = null;
-
-    // Check if the old fiber and new element have the same type
-    const sameType = oldFiber && element && element.type === oldFiber.type;
-
-    // CASE 1: UPDATE
-    // Same type -> Keep the existing DOM node, update props
-    if (sameType) {
-      newFiber = {
-        type: oldFiber.type,
-        props: element.props,
-        dom: oldFiber.dom, // REUSE OLD DOM NODE
-        parent: wipFiber,
-        alternate: oldFiber,
-        effectTag: "UPDATE",
-      };
-    }
-
-    // CASE 2: PLACEMENT
-    // Different type or new element -> Needs a brand-new DOM node
-    if (element && !sameType) {
-      newFiber = {
-        type: element.type,
-        props: element.props,
-        dom: null,
-        parent: wipFiber,
-        alternate: null,
-        effectTag: "PLACEMENT",
-      };
-    }
-
-    // CASE 3: DELETION
-    // Old fiber exists, but no corresponding new element -> Delete old node
-    if (oldFiber && !sameType) {
-      oldFiber.effectTag = "DELETION";
-      deletions.push(oldFiber); // Track node for Commit Phase
-    }
-
-    // Advance to the next sibling in the old tree
-    if (oldFiber) {
-      oldFiber = oldFiber.sibling;
-    }
-
-    // Link into LCRS structure
-    if (index === 0) {
-      wipFiber.child = newFiber;
-    } else if (element) {
-      prevSibling.sibling = newFiber;
-    }
-
-    prevSibling = newFiber;
-    index++;
-  }
-}
-
 /**
  * Entry point for rendering a JSX element to a container.render
  */
@@ -245,7 +105,6 @@ function render(element, container) {
 
   deletions = [];
   nextUnitOfWork = wipRoot;
-  console.log({ nextUnitOfWork });
 }
 
 export const Act = {
