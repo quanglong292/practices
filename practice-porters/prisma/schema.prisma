@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Core Field Definitions ───────────────────────────────────────────────────
+model columns {
+  column_id    Int      @id @default(autoincrement())
+  parent_id    Int?
+  column_label String   @db.VarChar(255)
+  data_type    Int
+  is_require   Boolean  @default(false)
+  default_data String?  @db.VarChar(500)
+
+  // Self-referencing for hierarchy
+  parent       columns?  @relation("ColumnHierarchy", fields: [parent_id], references: [column_id])
+  children     columns[] @relation("ColumnHierarchy")
+
+  // Relations
+  form_columns  form_columns[]
+  dynamic_rules dynamic_rules[]
+}
+
+// ─── Forms ────────────────────────────────────────────────────────────────────
+model forms {
+  form_id   Int     @id @default(autoincrement())
+  form_code String  @unique @db.VarChar(100)
+  form_name String  @db.VarChar(255)
+  is_active Boolean @default(true)
+
+  form_columns  form_columns[]
+  dynamic_rules dynamic_rules[]
+}
+
+// ─── Form-Column Junction ─────────────────────────────────────────────────────
+model form_columns {
+  form_id              Int
+  column_id            Int
+  sort_order           Int     @default(0)
+  is_required_override Boolean @default(false)
+
+  form    forms   @relation(fields: [form_id], references: [form_id])
+  columns columns @relation(fields: [column_id], references: [column_id])
+
+  @@id([form_id, column_id])
+}
+
+// ─── Dynamic Rules ────────────────────────────────────────────────────────────
+model dynamic_rules {
+  rule_id         Int     @id @default(autoincrement())
+  form_id         Int?
+  column_id       Int?
+  rule_type       String  @db.VarChar(50) // VALIDATION | VISIBILITY | CALCULATION
+  rule_expression Json
+  error_message   String? @db.VarChar(500)
+
+  forms   forms?   @relation(fields: [form_id], references: [form_id])
+  columns columns? @relation(fields: [column_id], references: [column_id])
+}
+
+// ─── Sales Records ────────────────────────────────────────────────────────────
+model sales_numbers {
+  sales_id   Int      @id @default(autoincrement())
+  company_id Int
+  created_at DateTime @default(now())
+
+  sales_field_cache sales_field_cache[]
+}
+
+// ─── EAV Field Cache ──────────────────────────────────────────────────────────
+// Mocks legacy CRM BLOB storage: data_value is a raw binary blob that embeds
+// both the field_id and its typed value. No FK to columns — opaque by design.
+model sales_field_cache {
+  id          Int      @id @default(autoincrement())
+  sales_id    Int
+  data_value  Bytes    @db.Blob // Binary payload: encodes { field_id, val } internally
+  update_date DateTime @updatedAt
+
+  sales_numbers sales_numbers @relation(fields: [sales_id], references: [sales_id])
+}
