@@ -1,0 +1,221 @@
+:root {
+  --bg-main: #090d16;
+  --bg-card: #0f172a;
+  --bg-card-hover: #1e293b;
+  --border-color: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --color-update: #1e3a8a;
+  --border-update: #3b82f6;
+  --text-update: #eff6ff;
+
+  --color-placement: #064e3b;
+  --border-placement: #10b981;
+  --text-placement: #ecfdf5;
+
+  --color-deletion: #881337;
+  --border-deletion: #f43f5e;
+  --text-deletion: #ffe4e6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  max-width: 900px;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 16px;
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+.scenarios-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: var(--bg-card);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.btn {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.btn:hover {
+  background-color: #334155;
+  border-color: #64748b;
+}
+
+.btn-active {
+  background-color: #1e3a8a !important;
+  border-color: #3b82f6 !important;
+  color: #eff6ff !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.btn-reset {
+  background-color: #312e81;
+  border-color: #6366f1;
+}
+
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-update {
+  background-color: var(--color-update);
+  border: 1px solid var(--border-update);
+  color: var(--text-update);
+}
+
+.badge-placement {
+  background-color: var(--color-placement);
+  border: 1px solid var(--border-placement);
+  color: var(--text-placement);
+}
+
+.badge-deletion {
+  background-color: var(--color-deletion);
+  border: 1px solid var(--border-deletion);
+  color: var(--text-deletion);
+}
+
+.badge-multi {
+  background-color: #4c1d95;
+  border: 1px solid #a855f7;
+  color: #faf5ff;
+}
+
+.inspector {
+  background-color: #0b1120;
+  border: 1px solid #1e293b;
+  border-radius: 6px;
+  padding: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.inspector-highlight {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.inspector-success {
+  color: #34d399;
+  font-weight: 600;
+}
+
+.demo-stage {
+  min-height: 140px;
+  border: 2px dashed #334155;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #0a0f1d;
+}
+
+.demo-box {
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.demo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.demo-list-item {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.counter-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

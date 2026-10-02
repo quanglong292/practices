@@ -1,3 +1,5 @@
+export const deletions = [];
+
 export function reconcileChildren(wipFiber, elements) {
   let index = 0;
   // Get the first child of the old fiber from alternate

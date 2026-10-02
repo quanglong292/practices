@@ -26,12 +26,7 @@ export function createDom(fiber) {
       ? document.createTextNode("")
       : document.createElement(fiber.type);
 
-  const isProperty = (key) => key !== "children";
-  Object.keys(fiber.props)
-    .filter(isProperty)
-    .forEach((name) => {
-      dom[name] = fiber.props[name];
-    });
+  updateDom(dom, {}, fiber.props);
 
   return dom;
 }
@@ -56,7 +51,11 @@ export function updateDom(dom, prevProps, nextProps) {
     .filter(isProperty)
     .filter(isGone(prevProps, nextProps))
     .forEach((name) => {
-      dom[name] = "";
+      if (name === "style") {
+        dom.style = "";
+      } else {
+        dom[name] = "";
+      }
     });
 
   // 3. Set new or changed properties
@@ -64,7 +63,11 @@ export function updateDom(dom, prevProps, nextProps) {
     .filter(isProperty)
     .filter(isNew(prevProps, nextProps))
     .forEach((name) => {
-      dom[name] = nextProps[name];
+      if (name === "style" && typeof nextProps[name] === "object") {
+        Object.assign(dom.style, nextProps[name]);
+      } else {
+        dom[name] = nextProps[name];
+      }
     });
 
   // 4. Add new event listeners

@@ -1,4 +1,4 @@
-import { reconcileChildren } from "./reconcile";
+import { reconcileChildren, deletions } from "./reconcile";
 import { createDom, createElement, updateDom } from "./dom";
 
 function commitRoot() {
@@ -39,7 +39,6 @@ function commitWork(fiber) {
 let nextUnitOfWork = null;
 let wipRoot = null;
 let currentRoot = null;
-let deletions = null;
 
 /**
  * The core engine loop.
@@ -51,6 +50,7 @@ function workLoop(deadline) {
   // 1. Process fibers as long as we have time and work
   while (nextUnitOfWork && !shouldYield) {
     nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
+    console.log({ nextUnitOfWork });
 
     // Yield if we have less than 1ms left before the browser needs to paint
     shouldYield = deadline.timeRemaining() < 1;
@@ -103,7 +103,7 @@ function render(element, container) {
     alternate: currentRoot,
   };
 
-  deletions = [];
+  deletions.length = 0;
   nextUnitOfWork = wipRoot;
 }
 

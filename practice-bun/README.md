@@ -111,7 +111,8 @@ practice-bun/
 
 ### 2. Start Infrastructure (Postgres, Redis, Kafka)
 ```bash
-docker compose up -d
+bun run docker:up
+# Or: docker compose up -d
 ```
 
 | Service | Port | Description |
@@ -127,21 +128,26 @@ docker compose up -d
 cp .env.example .env
 
 # Run Prisma database migrations
-bunx prisma migrate dev --name init
+bun run db:migrate
 
 # (Optional) Open Prisma Studio database viewer
-bunx prisma studio
+bun run db:studio
 ```
+
+> **Tip**: You can bootstrap infrastructure and migrations in one command with `bun run setup`.
 
 ### 4. Run Development Server
 ```bash
 bun run dev
+# Or start infra and dev server together:
+bun run startup
 ```
 The server will start at `http://localhost:3000`.
 
-### 5. Run Automated Tests
+### 5. Run Automated Tests & Type Check
 ```bash
 bun test
+bun run typecheck
 ```
 
 ---
