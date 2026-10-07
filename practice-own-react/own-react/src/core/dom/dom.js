@@ -3,9 +3,12 @@ export function createElement(type, props, ...children) {
     type,
     props: {
       ...props,
-      children: children.map((child) =>
-        typeof child === "object" ? child : createTextElement(child),
-      ),
+      children: children
+        .flat(Infinity)
+        .filter((child) => child != null && child !== false)
+        .map((child) =>
+          typeof child === "object" ? child : createTextElement(child),
+        ),
     },
   };
 }
@@ -36,7 +39,7 @@ const isProperty = (key) => key !== "children" && !isEvent(key);
 const isNew = (prev, next) => (key) => prev[key] !== next[key];
 const isGone = (_, next) => (key) => !(key in next);
 
-export function updateDom(dom, prevProps, nextProps) {
+export function updateDom(dom, prevProps = {}, nextProps = {}) {
   // 1. Remove old or changed event listeners
   Object.keys(prevProps)
     .filter(isEvent)

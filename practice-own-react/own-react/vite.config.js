@@ -7,4 +7,7 @@ export default defineConfig({
     jsxFactory: "Didact.createElement",
     jsxFragment: "Didact.Fragment",
   },
+  optimizeDeps: {
+    noDiscovery: true,
+  },
 });

@@ -1,14 +1,15 @@
 export const deletions = [];
 
-export function reconcileChildren(wipFiber, elements) {
+export function reconcileChildren(wipFiber, elements = []) {
   let index = 0;
   // Get the first child of the old fiber from alternate
   let oldFiber = wipFiber.alternate && wipFiber.alternate.child;
   let prevSibling = null;
+  const flatElements = (elements || []).flat();
 
   // Loop through both new elements and old fiber siblings
-  while (index < elements.length || oldFiber != null) {
-    const element = elements[index];
+  while (index < flatElements.length || oldFiber != null) {
+    const element = flatElements[index];
     let newFiber = null;
 
     // Check if the old fiber and new element have the same type
@@ -55,12 +56,13 @@ export function reconcileChildren(wipFiber, elements) {
     // Link into LCRS structure
     if (index === 0) {
       wipFiber.child = newFiber;
-    } else if (element) {
-      // Alwas start from index > 0
+    } else if (prevSibling && newFiber) {
       prevSibling.sibling = newFiber;
     }
 
-    prevSibling = newFiber;
+    if (newFiber) {
+      prevSibling = newFiber;
+    }
     index++;
   }
 }
