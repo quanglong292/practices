@@ -9,15 +9,126 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  SELLER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryStatus {
+  PENDING
+  PICKED_UP
+  SOC_SORTED
+  LM_HUB_ARRIVED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  FAILED
+  CANCELLED
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String     @id @default(uuid())
+  email        String     @unique
+  phone        String     @unique
+  name         String?
+  passwordHash String
+  role         Role       @default(USER)
+  nation       String     @default("VN")
+  metadata     Json?
+  orders       Order[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("users")
+}
+
+model Product {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(12, 2)
+  quantity    Int         @default(0)
+  options     Json        @default("{}")
+  nation      String      @default("VN")
+  metadata    Json?
+  categories  Category[]  @relation("ProductCategories")
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("products")
+}
+
+model Category {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  metadata    Json?
+  products    Product[]  @relation("ProductCategories")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("categories")
 }
 
 model Order {
-  id String @id @default(uuid())
-  name String 
+  id              String         @id @default(uuid())
+  orderNumber     String         @unique
+  userId          String
+  user            User           @relation(fields: [userId], references: [id], onDelete: Restrict)
+  status          OrderStatus    @default(PENDING)
+  totalAmount     Decimal        @db.Decimal(12, 2)
+  shippingAddress Json?
+  items           OrderItem[]
+  delivery        Delivery?
+  metadata        Json?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity  Int      @default(1)
+  unitPrice Decimal  @db.Decimal(12, 2)
+  options   Json?
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+model Delivery {
+  id             String         @id @default(uuid())
+  trackingNumber String         @unique
+  orderId        String         @unique
+  order          Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status         DeliveryStatus @default(PENDING)
+  currentHub     String?
+  driverId       String?
+  podUrl         String?
+  metadata       Json?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([trackingNumber])
+  @@index([status])
+  @@map("deliveries")
 }
